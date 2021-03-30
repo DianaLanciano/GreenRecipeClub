@@ -17,14 +17,16 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        Button categoryBtnSalad = view.findViewById(R.id.button_category_salads);
-
-        categoryBtnSalad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_listOfRecipesFragment);
-            }
-        });
+//        Button categoryBtnSalad = view.findViewById(R.id.button_category_salads);
+//
+//        categoryBtnSalad.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_listOfRecipesFragment);
+//            }
+//
+//
+//        });
         return view;
     }
 }

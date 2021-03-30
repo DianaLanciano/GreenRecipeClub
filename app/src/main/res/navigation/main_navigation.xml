@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_listOfRecipesFragment_to_recipePageFragment"
             app:destination="@id/recipePageFragment" />
+        <argument
+            android:name="Categories"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/recipePageFragment"
@@ -62,6 +65,9 @@
         <action
             android:id="@+id/action_userListOfRecipesFragment_to_recipePageFragment"
             app:destination="@id/recipePageFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/addNewRecipeFragment"
