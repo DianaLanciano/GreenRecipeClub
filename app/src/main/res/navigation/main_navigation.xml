@@ -18,5 +18,28 @@
         android:id="@+id/listOfRecipesFragment"
         android:name="com.example.greenrecipeclub.ListOfRecipesFragment"
         android:label="fragment_list_of_recipes"
-        tools:layout="@layout/fragment_list_of_recipes" />
+        tools:layout="@layout/fragment_list_of_recipes" >
+        <action
+            android:id="@+id/action_listOfRecipesFragment_to_recipePageFragment"
+            app:destination="@id/recipePageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipePageFragment"
+        android:name="com.example.greenrecipeclub.RecipePageFragment"
+        android:label="fragment_recipe_page"
+        tools:layout="@layout/fragment_recipe_page" >
+        <action
+            android:id="@+id/action_recipePageFragment_to_editRecipeFragment"
+            app:destination="@id/editRecipeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editRecipeFragment"
+        android:name="com.example.greenrecipeclub.EditRecipeFragment"
+        android:label="fragment_edit_recipe"
+        tools:layout="@layout/fragment_edit_recipe" />
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.example.greenrecipeclub.UserProfileFragment"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" />
 </navigation>
