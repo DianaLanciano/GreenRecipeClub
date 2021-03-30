@@ -41,5 +41,31 @@
         android:id="@+id/userProfileFragment"
         android:name="com.example.greenrecipeclub.UserProfileFragment"
         android:label="fragment_user_profile"
-        tools:layout="@layout/fragment_user_profile" />
+        tools:layout="@layout/fragment_user_profile" >
+        <action
+            android:id="@+id/action_userProfileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_userListOfRecipesFragment"
+            app:destination="@id/userListOfRecipesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.greenrecipeclub.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/userListOfRecipesFragment"
+        android:name="com.example.greenrecipeclub.UserListOfRecipesFragment"
+        android:label="fragment_user_list_of_recipes"
+        tools:layout="@layout/fragment_user_list_of_recipes" >
+        <action
+            android:id="@+id/action_userListOfRecipesFragment_to_recipePageFragment"
+            app:destination="@id/recipePageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewRecipeFragment"
+        android:name="com.example.greenrecipeclub.AddNewRecipeFragment"
+        android:label="fragment_add_new_recipe"
+        tools:layout="@layout/fragment_add_new_recipe" />
 </navigation>
