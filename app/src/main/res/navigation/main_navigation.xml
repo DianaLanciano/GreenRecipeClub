@@ -10,4 +10,9 @@
         android:name="com.example.greenrecipeclub.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/listOfRecipesFragment"
+        android:name="com.example.greenrecipeclub.ListOfRecipesFragment"
+        android:label="fragment_list_of_recipes"
+        tools:layout="@layout/fragment_list_of_recipes" />
 </navigation>
