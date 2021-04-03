@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CCD9C3"
+    android:tag="soup"
     tools:context=".HomeFragment">
 
 
@@ -21,6 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -40,28 +42,34 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/cheese1"
+
+                android:id="@+id/vegan"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#CCD9C3"
-                android:src="@drawable/hassa" />
+                android:src="@drawable/vegan"
+                android:tag="vegan" />
+
 
             <ImageButton
-                android:id="@+id/hamburger1"
+                android:id="@+id/glutenFree"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#CCD9C3"
-                android:src="@drawable/glutenfree" />
+                android:src="@drawable/glutenfree"
+                android:tag="glutenFree" />
 
             <ImageButton
-                android:id="@+id/fish1"
+                android:id="@+id/salads"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#CCD9C3"
-                android:src="@drawable/salad" />
+                android:src="@drawable/salad"
+                android:tag="salads" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -71,28 +79,31 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/cheese2"
+                android:id="@+id/fishes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#CCD9C3"
-                android:src="@drawable/fish" />
+                android:src="@drawable/fish"
+                android:tag="fishes" />
 
             <ImageButton
-                android:id="@+id/hamburger2"
+                android:id="@+id/spaguetti"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#CCD9C3"
-                android:src="@drawable/spaguetti" />
+                android:src="@drawable/spaghetti"
+                android:tag="spaguetti" />
 
             <ImageButton
-                android:id="@+id/fish2"
+                android:id="@+id/meet"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#CCD9C3"
-                android:src="@drawable/steak" />
+                android:src="@drawable/steak"
+                android:tag="meet" />
         </LinearLayout>
 
         <LinearLayout
@@ -107,24 +118,45 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#CCD9C3"
-                android:src="@drawable/stew" />
+                android:src="@drawable/soup" />
 
             <ImageButton
-                android:id="@+id/hamburger"
+                android:id="@+id/chicken"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#CCD9C3"
-                android:src="@drawable/turkey" />
+                android:src="@drawable/turkey"
+                android:tag="chicken" />
 
             <ImageButton
-                android:id="@+id/fish"
+                android:id="@+id/desserts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#CCD9C3"
-                android:src="@drawable/chocolate" />
+                android:src="@drawable/chocolate"
+                android:tag="desserts" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/Healthyeating"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="cursive"
+        android:text="Healthy eating"
+        android:textAlignment="center"
+        android:textColor="#A8A1A1"
+        android:textColorHighlight="#6E4949"
+        android:textColorHint="#453E3E"
+        android:textColorLink="#E38B8B"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
