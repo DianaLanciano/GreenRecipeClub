@@ -3,8 +3,8 @@ package com.example.greenrecipeclub.model;
 public class User {
     private static User theUser = null;
 
-    public String userUsername;
-    public String userEmail;
+    public String userName;
+    public String email;
     public String userId;
     public String password;
     public String address;
@@ -12,8 +12,8 @@ public class User {
 
     private User()
     {
-        userEmail = null;
-        userUsername = null;
+        userName = null;
+        email = null;
         profileImageUrl = null;
         password = null;
         address = null;

@@ -7,6 +7,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,5 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.main_navhost);
         NavigationUI.setupActionBarWithNavController(this, navController);
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_manu);
+        NavigationUI.setupWithNavController(bottomNav,navController);
     }
 }
