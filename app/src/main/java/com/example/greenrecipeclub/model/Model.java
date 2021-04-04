@@ -1,25 +1,51 @@
 package com.example.greenrecipeclub.model;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
+
 import java.util.List;
 
 public class Model {
 
+    ModelFirebase modelFirebase = new ModelFirebase();
     public final static Model instance = new Model();
+
+    public interface Listener<T> {
+        void onComplete(T data);
+    }
+
+    public interface CompListener {
+        void onComplete();
+    }
+
     private  Model(){
 
     }
 
-//    List<Recipe> getAllRecipes(){
-//
-//        List<Recipe> data = AppLocalDb.db.RecipeDao().getAllRecipes();
-//        return data;
-//    }
-//    void addRecipe(Recipe recipe){
-//        AppLocalDb.db.RecipeDao().insertRecipe(recipe);
-//    }
-//    void deleteRecipeById(String id){
-//
-//    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void addRecipe(final Recipe recipe, Listener<Boolean> listener) {
+        ModelFirebase.addRecipe(recipe, listener);
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                AppLocalDb.db.RecipeDao().insertAllRecipes(recipe);
+                return "";
+            }
+        }.execute();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void deleteRecipe(final Recipe recipe, Listener<Boolean> listener) {
+        ModelFirebase.deleteRecipe(recipe, listener);
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                AppLocalDb.db.RecipeDao().deleteRecipe(recipe);
+                return "";
+            }
+        }.execute();
+    }
 
 
 }

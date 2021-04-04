@@ -22,4 +22,6 @@ public interface RecipeDao {
 
     @Query("delete from Recipe where recipeId = :recipeId")
     void deleteByRecipeId(String recipeId);
+
+    void insertAllRecipes(Recipe recipe);
 }
