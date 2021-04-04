@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.greenrecipeclub.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_listOfRecipesFragment"
             app:destination="@id/listOfRecipesFragment" />
@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/listOfRecipesFragment"
         android:name="com.example.greenrecipeclub.ListOfRecipesFragment"
-        android:label="fragment_list_of_recipes"
-        tools:layout="@layout/fragment_list_of_recipes" >
+        android:label="Recipes"
+        tools:layout="@layout/fragment_list_of_recipes">
         <action
             android:id="@+id/action_listOfRecipesFragment_to_recipePageFragment"
             app:destination="@id/recipePageFragment" />
@@ -29,8 +29,8 @@
     <fragment
         android:id="@+id/recipePageFragment"
         android:name="com.example.greenrecipeclub.RecipePageFragment"
-        android:label="fragment_recipe_page"
-        tools:layout="@layout/fragment_recipe_page" >
+        android:label="Recipe"
+        tools:layout="@layout/fragment_recipe_page">
         <action
             android:id="@+id/action_recipePageFragment_to_editRecipeFragment"
             app:destination="@id/editRecipeFragment" />
@@ -38,13 +38,13 @@
     <fragment
         android:id="@+id/editRecipeFragment"
         android:name="com.example.greenrecipeclub.EditRecipeFragment"
-        android:label="fragment_edit_recipe"
+        android:label="Edit recipe"
         tools:layout="@layout/fragment_edit_recipe" />
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.example.greenrecipeclub.UserProfileFragment"
-        android:label="fragment_user_profile"
-        tools:layout="@layout/fragment_user_profile" >
+        android:label="Profile"
+        tools:layout="@layout/fragment_user_profile">
         <action
             android:id="@+id/action_userProfileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
@@ -55,13 +55,13 @@
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.greenrecipeclub.EditProfileFragment"
-        android:label="fragment_edit_profile"
+        android:label="Edit profile"
         tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/userListOfRecipesFragment"
         android:name="com.example.greenrecipeclub.UserListOfRecipesFragment"
-        android:label="fragment_user_list_of_recipes"
-        tools:layout="@layout/fragment_user_list_of_recipes" >
+        android:label="My recipes"
+        tools:layout="@layout/fragment_user_list_of_recipes">
         <action
             android:id="@+id/action_userListOfRecipesFragment_to_recipePageFragment"
             app:destination="@id/recipePageFragment" />
@@ -72,6 +72,6 @@
     <fragment
         android:id="@+id/addNewRecipeFragment"
         android:name="com.example.greenrecipeclub.AddNewRecipeFragment"
-        android:label="fragment_add_new_recipe"
+        android:label="Add recipe"
         tools:layout="@layout/fragment_add_new_recipe" />
 </navigation>
