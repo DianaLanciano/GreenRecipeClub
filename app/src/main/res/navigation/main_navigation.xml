@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.greenrecipeclub.HomeFragment"
+        android:name="com.example.greenrecipeclub.fragments.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/listOfRecipesFragment"
-        android:name="com.example.greenrecipeclub.ListOfRecipesFragment"
+        android:name="com.example.greenrecipeclub.fragments.ListOfRecipesFragment"
         android:label="Recipes"
         tools:layout="@layout/fragment_list_of_recipes">
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipePageFragment"
-        android:name="com.example.greenrecipeclub.RecipePageFragment"
+        android:name="com.example.greenrecipeclub.fragments.RecipePageFragment"
         android:label="Recipe"
         tools:layout="@layout/fragment_recipe_page">
         <action
@@ -37,12 +37,12 @@
     </fragment>
     <fragment
         android:id="@+id/editRecipeFragment"
-        android:name="com.example.greenrecipeclub.EditRecipeFragment"
+        android:name="com.example.greenrecipeclub.fragments.EditRecipeFragment"
         android:label="Edit recipe"
         tools:layout="@layout/fragment_edit_recipe" />
     <fragment
         android:id="@+id/userProfileFragment"
-        android:name="com.example.greenrecipeclub.UserProfileFragment"
+        android:name="com.example.greenrecipeclub.fragments.UserProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_user_profile">
         <action
@@ -54,12 +54,12 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.greenrecipeclub.EditProfileFragment"
+        android:name="com.example.greenrecipeclub.fragments.EditProfileFragment"
         android:label="Edit profile"
         tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/userListOfRecipesFragment"
-        android:name="com.example.greenrecipeclub.UserListOfRecipesFragment"
+        android:name="com.example.greenrecipeclub.fragments.UserListOfRecipesFragment"
         android:label="My recipes"
         tools:layout="@layout/fragment_user_list_of_recipes">
         <action
@@ -71,7 +71,7 @@
     </fragment>
     <fragment
         android:id="@+id/addNewRecipeFragment"
-        android:name="com.example.greenrecipeclub.AddNewRecipeFragment"
+        android:name="com.example.greenrecipeclub.fragments.AddNewRecipeFragment"
         android:label="Add recipe"
         tools:layout="@layout/fragment_add_new_recipe" />
 </navigation>

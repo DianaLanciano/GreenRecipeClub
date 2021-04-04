@@ -9,17 +9,17 @@ public class Model {
 
     }
 
-    List<Recipe> getAllRecipes(){
-
-        List<Recipe> data = AppLocalDb.db.RecipeDao().getAllRecipes();
-        return data;
-    }
-    void addRecipe(Recipe recipe){
-        AppLocalDb.db.RecipeDao().insertRecipe(recipe);
-    }
-    void deleteRecipeById(String id){
-
-    }
+//    List<Recipe> getAllRecipes(){
+//
+//        List<Recipe> data = AppLocalDb.db.RecipeDao().getAllRecipes();
+//        return data;
+//    }
+//    void addRecipe(Recipe recipe){
+//        AppLocalDb.db.RecipeDao().insertRecipe(recipe);
+//    }
+//    void deleteRecipeById(String id){
+//
+//    }
 
 
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#CCD9C3"
     android:tag="soup"
-    tools:context=".HomeFragment">
+    tools:context=".fragments.HomeFragment">
 
 
     <ImageView

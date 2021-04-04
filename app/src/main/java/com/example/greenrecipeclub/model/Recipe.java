@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +15,7 @@ public class Recipe {
     private String recipeName;
     private String categoryId;
     private String categoryName;
-    private List<String> ingredient;
+    private String ingredient;
     private String publisherId;
     private String publisherName;
     private String recipeImgUrl;
@@ -32,7 +33,7 @@ public class Recipe {
     }
 
     public Recipe(@NonNull String recipeId, String recipeName, String categoryId, String categoryName,
-                  List<String> ingredient, String publisherId, String publisherName, String recipeImgUrl, long lastUpdated) {
+                  String ingredient, String publisherId, String publisherName, String recipeImgUrl, long lastUpdated) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.categoryId = categoryId;
@@ -77,11 +78,11 @@ public class Recipe {
         this.categoryName = categoryName;
     }
 
-    public List<String> getIngredient() {
+    public String getIngredient() {
         return ingredient;
     }
 
-    public void setIngredient(List<String> ingredient) {
+    public void setIngredient(String ingredient) {
         this.ingredient = ingredient;
     }
 
