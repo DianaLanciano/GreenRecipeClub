@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "473253127426",
+    "project_id": "green-recipe-club",
+    "storage_bucket": "green-recipe-club.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473253127426:android:ef0e8c4d0d384981480e1b",
+        "android_client_info": {
+          "package_name": "com.example.greenrecipeclub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473253127426-k6lg8hqcbtntlrjq5i7h57io58in1euf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1jMtZsh_epU4ZDnARLiKdGgZjklIfpQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473253127426-k6lg8hqcbtntlrjq5i7h57io58in1euf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
