@@ -2,6 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/amita_bold</item>
+        <item>@font/annie_use_your_telescope</item>
         <item>@font/arizonia</item>
         <item>@font/carter_one</item>
     </array>
