@@ -1,5 +1,6 @@
 package com.example.greenrecipeclub.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.greenrecipeclub.R;
 import com.example.greenrecipeclub.model.ModelFirebase;
@@ -79,6 +81,21 @@ public class activity_register extends AppCompatActivity {
     private void toLoginPage() {
         Intent intent = new Intent(this, activity_login.class);
         startActivity(intent);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(data != null && resultCode == RESULT_OK){
+            profileImageUri = data.getData();
+            profileImage.setImageURI(profileImageUri);
+        }
+        else {
+            Toast.makeText(this, "No image was selected", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
