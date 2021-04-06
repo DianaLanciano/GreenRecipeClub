@@ -23,7 +23,7 @@ public class activity_login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        registerBtn = findViewById(R.id.registerButton_login_screen);
+        registerBtn = findViewById(R.id.registerB_loginScreen);
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
