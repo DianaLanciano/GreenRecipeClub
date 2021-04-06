@@ -29,11 +29,4 @@
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_list_recipe_user"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="-3dp"
-        tools:layout_editor_absoluteY="142dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

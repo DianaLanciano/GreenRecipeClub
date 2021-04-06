@@ -81,10 +81,11 @@
         android:id="@+id/imageView4"
         android:layout_width="91dp"
         android:layout_height="61dp"
+        android:layout_marginTop="33dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_baseline_food_bank_24"
-        tools:layout_editor_absoluteY="547dp" />
+        app:layout_constraintTop_toBottomOf="@+id/registerB_loginScreen"
+        app:srcCompat="@drawable/ic_baseline_food_bank_24" />
 
     <Button
         android:id="@+id/registerB_loginScreen"
