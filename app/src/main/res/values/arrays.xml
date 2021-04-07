@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categoryArray" >
+        <item>Vegan</item>
+        <item>Gluten Free</item>
+        <item>Salads</item>
+        <item>Fishes</item>
+        <item>Spaguetti</item>
+        <item>Meat</item>
+        <item>Soup</item>
+        <item>Chicken</item>
+        <item>Dessert</item>
+    </string-array>
+</resources>
