@@ -221,6 +221,28 @@ public class ModelFirebase {
     }
 
 
+    public static void updateUserProfile(String username, String profileImgUrl, final Model.Listener<Boolean> listener)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> json = new HashMap<>();
+        if (username != null)
+            json.put("username", username);
+        else json.put("username", User.getInstance().userName);
+        if (profileImgUrl != null)
+            json.put("profileImageUrl", profileImgUrl);
+        else json.put("profileImageUrl", User.getInstance().profileImageUrl);
+        json.put("email", User.getInstance().email);
+
+        db.collection("userProfileData").document(User.getInstance().email).set(json).addOnCompleteListener(new OnCompleteListener<Void>()
+        {
+            @Override
+            public void onComplete(@NonNull Task<Void> task)
+            {
+                if (listener != null)
+                    listener.onComplete(task.isSuccessful());
+            }
+        });
+    }
 
 }
 
