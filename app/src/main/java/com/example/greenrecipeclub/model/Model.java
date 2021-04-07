@@ -25,14 +25,14 @@ public class Model {
 
     @SuppressLint("StaticFieldLeak")
     public void addRecipe(final Recipe recipe, Listener<Boolean> listener) {
-//        ModelFirebase.addRecipe(recipe, listener);
-//        new AsyncTask<String, String, String>() {
-//            @Override
-//            protected String doInBackground(String... strings) {
-//                AppLocalDb.db.RecipeDao().insertAllRecipes(recipe);
-//                return "";
-//            }
-//        }.execute();
+        ModelFirebase.addRecipe(recipe, listener);
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                AppLocalDb.db.RecipeDao().insertAllRecipes(recipe);
+                return "";
+            }
+        }.execute();
     }
 
     @SuppressLint("StaticFieldLeak")

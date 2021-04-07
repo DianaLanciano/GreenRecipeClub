@@ -34,6 +34,7 @@ public class ModelFirebase {
         void onFail();
     }
 
+    final static String RECIPE_COLLECTION = "recipe";
 
     public static void setUserLogin(final String email, String password, final Listener<Boolean> listener)
     {
@@ -190,6 +191,33 @@ public class ModelFirebase {
             Toast.makeText(MyApplication.context, "Register page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             return null;
         }
+    }
+
+
+    public static void addRecipe(Recipe recipe, final Model.Listener<Boolean> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(RECIPE_COLLECTION).document(recipe.getRecipeId()).set(toMap(recipe)).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (listener != null) {
+                    listener.onComplete(task.isSuccessful());
+                }
+
+            }});
+
+    }
+
+    public static Map<String, Object> toMap(Recipe recipe){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("recipeId", recipe.getRecipeId());
+        map.put("recipeName", recipe.getPublisherName());
+        map.put("categoryId", recipe.getCategoryId());
+        map.put("recipeIngredients", recipe.getIngredient());
+        map.put("recipeInstructions", recipe.getInstructions());
+        map.put("recipeImgUrl", recipe.getRecipeImgUrl());
+        map.put("userId", recipe.getPublisherId());
+        map.put("username", recipe.getPublisherName());
+        return map;
     }
 
 

@@ -11,6 +11,7 @@ import java.util.List;
 
 @Dao
 public interface RecipeDao {
+
 //    @Query("select * from Recipe")
 //    List<Recipe> getAllRecipes();
 //
@@ -23,8 +24,8 @@ public interface RecipeDao {
 //    @Query("delete from Recipe where recipeId = :recipeId")
 //    void deleteByRecipeId(String recipeId);
 //
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    void insertAllRecipes(Recipe recipe);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAllRecipes(Recipe...recipe);
 
 //    @Query("select * from Recipe where categoryName = :categoryName")
 //    void geRecipesByCategory(String categoryName);

@@ -14,8 +14,8 @@ public class Recipe {
     private String recipeId;
     private String recipeName;
     private String categoryId;
-    private String categoryName;
     private String ingredient;
+    private String instructions;
     private String publisherId;
     private String publisherName;
     private String recipeImgUrl;
@@ -26,23 +26,31 @@ public class Recipe {
         this.recipeId = "";
         this.recipeName = "";
         this.categoryId = "";
-        this.categoryName = "";
         this.publisherId = "";
         this.publisherName = "";
         this.recipeImgUrl = "";
+        this.instructions="";
     }
 
     public Recipe(@NonNull String recipeId, String recipeName, String categoryId, String categoryName,
-                  String ingredient, String publisherId, String publisherName, String recipeImgUrl, long lastUpdated) {
+                  String ingredient, String publisherId, String publisherName, String recipeImgUrl, long lastUpdated,String instructions) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.categoryId = categoryId;
-        this.categoryName = categoryName;
         this.ingredient = ingredient;
         this.publisherId = publisherId;
         this.publisherName = publisherName;
         this.recipeImgUrl = recipeImgUrl;
         this.lastUpdated = lastUpdated;
+        this.instructions = instructions;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
 
     @NonNull
@@ -70,13 +78,6 @@ public class Recipe {
         this.categoryId = categoryId;
     }
 
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
 
     public String getIngredient() {
         return ingredient;
