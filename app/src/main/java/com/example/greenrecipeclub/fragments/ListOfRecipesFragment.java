@@ -16,6 +16,7 @@ import com.example.greenrecipeclub.R;
 public class ListOfRecipesFragment extends Fragment {
 
     RecyclerView categoryList;
+    String category;
 
 
     public ListOfRecipesFragment() {
@@ -31,6 +32,7 @@ public class ListOfRecipesFragment extends Fragment {
 
         categoryList = view.findViewById(R.id.RecyclerlistOfrecipes_recipes_screen);
         categoryList.setHasFixedSize(true);
+        category = ListOfRecipesFragmentArgs.fromBundle(getArguments()).getCategories();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         categoryList.setLayoutManager(layoutManager);
