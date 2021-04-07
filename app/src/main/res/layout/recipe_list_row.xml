@@ -7,7 +7,7 @@
     android:background="#CCD9C3">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/row_inList_img_imgOfRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -18,12 +18,31 @@
         tools:layout_editor_absoluteX="22dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/row_inList_text_titleOfRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="RecipeName"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/row_inList_img_imgOfRecipe"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/row_inList_text_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/row_inList_img_imgOfRecipe"
+        app:layout_constraintTop_toBottomOf="@+id/row_inList_text_titleOfRecipe" />
+
+    <TextView
+        android:id="@+id/row_inList_text_userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        app:layout_constraintTop_toBottomOf="@+id/row_inList_text_category"
+        tools:layout_editor_absoluteX="102dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

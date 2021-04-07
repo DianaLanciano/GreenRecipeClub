@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 
+import com.example.greenrecipeclub.MyApplication;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -55,6 +57,7 @@ public class Model {
     public void setUserAppData(String email) {
         ModelFirebase.setUserAppData(email);
     }
+
 
 
 
