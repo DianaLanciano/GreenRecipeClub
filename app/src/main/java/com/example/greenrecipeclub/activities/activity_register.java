@@ -53,7 +53,7 @@ public class activity_register extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ModelFirebase.registerUserAccount(username.getText().toString(), password.getText().toString(), email.getText().toString(), profileImageUri, new ModelFirebase.Listener<Boolean>() {
+                ModelFirebase.registerUser(username.getText().toString(), password.getText().toString(), email.getText().toString(), profileImageUri, new ModelFirebase.Listener<Boolean>() {
                     @Override
                     public void onComplete() {
                         activity_register.this.finish();

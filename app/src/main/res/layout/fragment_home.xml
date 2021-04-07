@@ -97,7 +97,7 @@
                 android:tag="spaguetti" />
 
             <ImageButton
-                android:id="@+id/meet"
+                android:id="@+id/meat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -113,7 +113,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/cheese"
+                android:id="@+id/soup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

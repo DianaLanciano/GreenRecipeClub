@@ -35,12 +35,10 @@ public class ModelFirebase {
     }
 
 
-    public static void register(String userName, String password, String email, Uri imageUrl, Listener<Boolean> listener) {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    public static void setUserLogin(final String email, String password, final Listener<Boolean> listener)
+    {
 
-        if (firebaseAuth.getCurrentUser() != null) {
-            firebaseAuth.signOut();
-        }
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
         if (email != null && !email.equals("") && password != null && !password.equals(""))
         {
@@ -58,6 +56,7 @@ public class ModelFirebase {
                     setUserAppData(email);
                     listener.onComplete();
                 }
+
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
@@ -65,11 +64,13 @@ public class ModelFirebase {
                     listener.onFail();
                 }
             });
-        } else {
+        }
+        else {
             Toast.makeText(MyApplication.context, "Please fill all data fields", Toast.LENGTH_SHORT).show();
         }
     }
-    public static void registerUserAccount(final String username, String password, final String email, final Uri imageUri, final Listener<Boolean> listener)
+
+    public static void registerUser(final String username,final String password, final String email, final Uri imageUri, final Listener<Boolean> listener)
     {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
