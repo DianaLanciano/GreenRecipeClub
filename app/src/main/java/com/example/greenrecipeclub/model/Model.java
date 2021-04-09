@@ -1,7 +1,10 @@
 package com.example.greenrecipeclub.model;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -59,6 +62,73 @@ public class Model {
     }
 
 
+
+    public LiveData<List<Recipe>> getAllRecipes() {
+        LiveData<List<Recipe>> liveData = AppLocalDb.db.RecipeDao().getAllRecipes();
+        refreshRecipesList(null);
+        return liveData;
+
+    }
+
+    public LiveData<List<Recipe>> getAllRecipesPerCategory(String categoryId) {
+        LiveData<List<Recipe>> liveData = AppLocalDb.db.RecipeDao().getAllRecipesPerCategory(categoryId);
+        refreshRecipesList(null);
+        return liveData;
+    }
+
+    public void refreshRecipesList(final CompListener listener) {
+        long lastUpdated = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE).getLong("RecipesLastUpdateDate", 0);
+        ModelFirebase.getAllRecipesSince(lastUpdated, new Listener<List<Recipe>>() {
+            @SuppressLint("StaticFieldLeak")
+            @Override
+            public void onComplete(List<Recipe> data) {
+                new AsyncTask<String, String, String>() {
+                    @Override
+                    protected String doInBackground(String... strings) {
+                        long lastUpdated = 0;
+                        for (Recipe r : data) {
+                            AppLocalDb.db.RecipeDao().insertAllRecipes(r);
+                            if (r.getLastUpdated() > lastUpdated)
+                                lastUpdated = r.getLastUpdated();
+                        }
+                        SharedPreferences.Editor edit = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE).edit();
+                        edit.putLong("RecipesLastUpdateDate", lastUpdated);
+                        edit.commit();
+                        return "";
+                    }
+
+                    @Override
+                    protected void onPostExecute(String s) {
+                        super.onPostExecute(s);
+                        cleanLocalDb();
+                        if (listener != null)
+                            listener.onComplete();
+                    }
+                }.execute("");
+
+            }
+        });
+    }
+
+
+    @SuppressLint("StaticFieldLeak")
+    private void cleanLocalDb() {
+        ModelFirebase.getDeletedRecipesId(new Listener<List<String>>() {
+            @Override
+            public void onComplete(final List<String> data) {
+                new AsyncTask<String, String, String>() {
+                    @Override
+                    protected String doInBackground(String... strings) {
+                        for (String id : data) {
+                            Log.d("TAG", "deleted id: " + id);
+                            AppLocalDb.db.RecipeDao().deleteByRecipeId(id);
+                        }
+                        return "";
+                    }
+                }.execute("");
+            }
+        });
+    }
 
 
 }

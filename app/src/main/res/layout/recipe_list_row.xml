@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/row_toList_of_recipes"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#CCD9C3">

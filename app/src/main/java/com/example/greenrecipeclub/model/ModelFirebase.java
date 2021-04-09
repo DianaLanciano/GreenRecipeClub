@@ -3,6 +3,7 @@ package com.example.greenrecipeclub.model;
 import com.example.greenrecipeclub.MyApplication;
 import android.content.ContentResolver;
 import android.net.Uri;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -11,16 +12,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -240,6 +245,63 @@ public class ModelFirebase {
             {
                 if (listener != null)
                     listener.onComplete(task.isSuccessful());
+            }
+        });
+    }
+
+    ///////////////////////////////////////
+
+    public static void getAllRecipesSince(long since, final Model.Listener<List<Recipe>> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Timestamp ts = new Timestamp(since,0);
+        db.collection(RECIPE_COLLECTION).whereGreaterThanOrEqualTo("lastUpdated", ts).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<Recipe> recipesData = null;
+                if (task.isSuccessful()){
+                    recipesData = new LinkedList<Recipe>();
+                    for(QueryDocumentSnapshot doc : task.getResult()){
+                        Map<String,Object> json = doc.getData();
+                        Recipe recipe = fromMap(json);
+                        recipesData.add(recipe);
+                    }
+                }
+                listener.onComplete(recipesData);
+                Log.d("TAG","refresh " + recipesData.size());
+            }
+        });
+    }
+
+
+    private static Recipe fromMap(Map<String, Object> json){
+        Recipe recipe = new Recipe();
+        recipe.setRecipeId((String) json.get("recipeId"));
+        recipe.setRecipeName((String) json.get("recipeName"));
+        recipe.setCategoryId((String) json.get("categoryId"));
+        recipe.setIngredient((String) json.get("recIngredients"));
+        recipe.setInstructions((String) json.get("recContent"));
+        recipe.setRecipeImgUrl((String) json.get("recipeImgUrl"));
+        recipe.setPublisherId((String) json.get("userId"));
+        recipe.setPublisherName((String) json.get("username"));
+
+        return recipe;
+    }
+
+
+    public static void getDeletedRecipesId(final Model.Listener<List<String>> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("deleted").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<String> deletedRecipsIds = null;
+                if (task.isSuccessful()){
+                    deletedRecipsIds = new LinkedList<String>();
+                    for(QueryDocumentSnapshot doc : task.getResult()){
+                        String deleted = (String) doc.getData().get("recipeId");
+                        deletedRecipsIds.add(deleted);
+                    }
+                }
+                listener.onComplete(deletedRecipsIds);
             }
         });
     }
