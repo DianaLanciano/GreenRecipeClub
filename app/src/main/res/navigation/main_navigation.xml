@@ -23,7 +23,7 @@
             android:id="@+id/action_listOfRecipesFragment_to_recipePageFragment"
             app:destination="@id/recipePageFragment" />
         <argument
-            android:name="Categories"
+            android:name="Category"
             app:argType="string" />
     </fragment>
     <fragment

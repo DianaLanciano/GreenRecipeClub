@@ -6,10 +6,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +20,11 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.lifecycle.Observer;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.greenrecipeclub.R;
+import com.example.greenrecipeclub.model.Model;
 import com.example.greenrecipeclub.model.Recipe;
 import com.squareup.picasso.Picasso;
 
@@ -51,15 +57,52 @@ public class ListOfRecipesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_of_recipes, container, false);
-        category = ListOfRecipesFragmentArgs.fromBundle(getArguments()).getCategories();
+        category = ListOfRecipesFragmentArgs.fromBundle(getArguments()).getCategory();
+        Log.d("TAG","arg_category"+category);
         list = view.findViewById(R.id.RecyclerlistOfrecipes_recipes_screen);
-        list.hasFixedSize();
+        list.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         list.setLayoutManager(layoutManager);
 
         adapter = new MyAdapter();
         list.setAdapter(adapter);
+
+        adapter.setOnClickListener(new OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                Recipe recipe = data.get(position);
+                NavDirections action = ListOfRecipesFragmentDirections.actionListOfRecipesFragmentToRecipePageFragment(recipe);
+                Navigation.findNavController(view).navigate(action);
+            }
+        });
+
+        //live data
+        liveData = viewList.getDataByCategory(category);
+        liveData.observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(List<Recipe> recipes) {
+
+                List<Recipe> reversedData = reverseData(recipes);
+                data = reversedData;
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
+        //final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.feed_list_swipe_refresh);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                viewList.refresh(new Model.CompListener() {
+//                    @Override
+//                    public void onComplete() {
+//                        swipeRefreshLayout.setRefreshing(false);
+//                    }
+//                });
+//            }
+//        });
+
 
 
         return view;
@@ -141,6 +184,15 @@ public class ListOfRecipesFragment extends Fragment {
         public int getItemCount() {
             return data.size();
         }
+    }
+
+
+    private List<Recipe> reverseData(List<Recipe> recipes) {
+        List<Recipe> reversedData = new LinkedList<>();
+        for (Recipe recipe: recipes) {
+            reversedData.add(0, recipe);
+        }
+        return reversedData;
     }
 
 
