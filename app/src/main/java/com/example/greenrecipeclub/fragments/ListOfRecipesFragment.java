@@ -69,8 +69,8 @@ public class ListOfRecipesFragment extends Fragment {
             public void onClick(int position) {
                 Recipe recipe = data.get(position);
 
-                //ListOfRecipesFragmentDirections.
-               // Navigation.findNavController(view).navigate(action);
+                ListOfRecipesFragmentDirections.ActionListOfRecipesFragmentToRecipePageFragment action = ListOfRecipesFragmentDirections.actionListOfRecipesFragmentToRecipePageFragment(recipe);
+                Navigation.findNavController(view).navigate(action);
             }
         });
 

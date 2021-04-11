@@ -19,21 +19,12 @@
         android:name="com.example.greenrecipeclub.fragments.ListOfRecipesFragment"
         android:label="Recipes"
         tools:layout="@layout/fragment_list_of_recipes">
-        <action
-            android:id="@+id/action_listOfRecipesFragment_to_recipePageFragment"
-            app:destination="@id/recipePageFragment" />
         <argument
             android:name="Category"
             app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/recipePageFragment"
-        android:name="com.example.greenrecipeclub.fragments.RecipePageFragment"
-        android:label="Recipe"
-        tools:layout="@layout/fragment_recipe_page">
         <action
-            android:id="@+id/action_recipePageFragment_to_editRecipeFragment"
-            app:destination="@id/editRecipeFragment" />
+            android:id="@+id/action_listOfRecipesFragment_to_recipePageFragment"
+            app:destination="@id/recipePageFragment" />
     </fragment>
     <fragment
         android:id="@+id/editRecipeFragment"
@@ -62,16 +53,28 @@
         android:name="com.example.greenrecipeclub.fragments.UserListOfRecipesFragment"
         android:label="My recipes"
         tools:layout="@layout/fragment_user_list_of_recipes">
-        <action
-            android:id="@+id/action_userListOfRecipesFragment_to_recipePageFragment"
-            app:destination="@id/recipePageFragment" />
         <argument
             android:name="userId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_userListOfRecipesFragment_to_recipePageFragment"
+            app:destination="@id/recipePageFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewRecipeFragment"
         android:name="com.example.greenrecipeclub.fragments.AddNewRecipeFragment"
         android:label="Add recipe"
         tools:layout="@layout/fragment_add_new_recipe" />
+    <fragment
+        android:id="@+id/recipePageFragment"
+        android:name="com.example.greenrecipeclub.RecipePageFragment"
+        android:label="Recipe Details"
+        tools:layout="@layout/fragment_recipe_page">
+        <argument
+            android:name="Recipe"
+            app:argType="com.example.greenrecipeclub.model.Recipe" />
+        <action
+            android:id="@+id/action_recipePageFragment_to_editRecipeFragment"
+            app:destination="@id/editRecipeFragment" />
+    </fragment>
 </navigation>
