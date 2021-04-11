@@ -6,28 +6,24 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.lifecycle.ViewModelProvider;
-
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.lifecycle.Observer;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.example.greenrecipeclub.R;
-import com.example.greenrecipeclub.model.Model;
+import  com.example.greenrecipeclub.model.Model;
 import com.example.greenrecipeclub.model.Recipe;
 import com.squareup.picasso.Picasso;
-
+import com.example.greenrecipeclub.activities.MainActivity;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -58,7 +54,7 @@ public class ListOfRecipesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_of_recipes, container, false);
         category = ListOfRecipesFragmentArgs.fromBundle(getArguments()).getCategory();
-        Log.d("TAG","arg_category"+category);
+        Log.d("TAG","arg_category "+ category);
         list = view.findViewById(R.id.RecyclerlistOfrecipes_recipes_screen);
         list.setHasFixedSize(true);
 
@@ -72,8 +68,9 @@ public class ListOfRecipesFragment extends Fragment {
             @Override
             public void onClick(int position) {
                 Recipe recipe = data.get(position);
-                NavDirections action = ListOfRecipesFragmentDirections.actionListOfRecipesFragmentToRecipePageFragment(recipe);
-                Navigation.findNavController(view).navigate(action);
+
+                //ListOfRecipesFragmentDirections.
+               // Navigation.findNavController(view).navigate(action);
             }
         });
 
@@ -90,18 +87,18 @@ public class ListOfRecipesFragment extends Fragment {
         });
 
 
-        //final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.feed_list_swipe_refresh);
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                viewList.refresh(new Model.CompListener() {
-//                    @Override
-//                    public void onComplete() {
-//                        swipeRefreshLayout.setRefreshing(false);
-//                    }
-//                });
-//            }
-//        });
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.feed_list_swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                viewList.refresh(new Model.CompListener() {
+                    @Override
+                    public void onComplete() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        });
 
 
 
@@ -142,9 +139,10 @@ public class ListOfRecipesFragment extends Fragment {
         public void bind(Recipe recipeToBind) {
             recipeTitle.setText(recipeToBind.getRecipeName());
             recipePublisher.setText(recipeToBind.getPublisherName());
+            recipeCategory.setText(recipeToBind.getCategoryId());
             recipe = recipeToBind;
             if (recipeToBind.getRecipeImgUrl() != null) {
-                Picasso.get().load(recipeToBind.getRecipeImgUrl()).placeholder(R.drawable.chocolate).into(recipeImg);
+                Picasso.get().load(recipeToBind.getRecipeImgUrl()).placeholder(R.drawable.hassa ).into(recipeImg);
             } else {
                 recipeImg.setImageResource(R.drawable.ic_launcher_background);
             }

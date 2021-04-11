@@ -9,22 +9,25 @@
 
     <ImageView
         android:id="@+id/row_inList_img_imgOfRecipe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.648"
         app:srcCompat="@drawable/fish"
-        tools:layout_editor_absoluteX="22dp" />
+        tools:layout_editor_absoluteX="27dp" />
 
     <TextView
         android:id="@+id/row_inList_text_titleOfRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/carter_one"
         android:text="RecipeName"
+        android:textSize="30sp"
         app:layout_constraintStart_toEndOf="@+id/row_inList_img_imgOfRecipe"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,18 +35,50 @@
         android:id="@+id/row_inList_text_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/row_inList_img_imgOfRecipe"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/row_inList_text_titleOfRecipe" />
 
     <TextView
         android:id="@+id/row_inList_text_userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
         android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/row_inList_text_category"
-        tools:layout_editor_absoluteX="102dp" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/aclonica"
+        android:text="Category:"
+        android:textColor="#F4E7E7"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/row_inList_img_imgOfRecipe"
+        app:layout_constraintTop_toBottomOf="@+id/row_inList_text_titleOfRecipe" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/aclonica"
+        android:text="Publisher:"
+        android:textColor="#F4E7E7"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/row_inList_img_imgOfRecipe"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

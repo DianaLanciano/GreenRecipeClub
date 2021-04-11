@@ -12,14 +12,14 @@ import java.util.List;
 @Dao
 public interface RecipeDao {
 
-    @Query("select * from Recipe")
+    @Query("select * from recipe")
     LiveData<List<Recipe>> getAllRecipes();
 
     @Query("select * from Recipe where categoryId = :categoryId")
     LiveData<List<Recipe>> getAllRecipesPerCategory(String categoryId);
 
-//    @Query("select * from Recipe where userId = :userId")
-//    LiveData<List<Recipe>> getAllRecipesPerUser(String userId);
+    @Query("select * from Recipe where publisherId = :userId")
+    LiveData<List<Recipe>> getAllRecipesPerUser(String userId);
 
     @Query("select * from Recipe where recipeId = :recipeId")
     Recipe GetRecipeById(String recipeId);
