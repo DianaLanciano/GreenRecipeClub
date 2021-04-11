@@ -24,10 +24,11 @@
         android:id="@+id/screen_profile_img_edirprofile"
         android:layout_width="36dp"
         android:layout_height="35dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="88dp"
         android:layout_marginEnd="32dp"
         android:src="@drawable/ic_baseline_edit_24"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/screen_profile_text_username"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -46,13 +47,14 @@
 
     <TextView
         android:id="@+id/screen_profile_text_username"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:fontFamily="@font/alfa_slab_one"
         android:text="UserName"
+        android:textAlignment="center"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

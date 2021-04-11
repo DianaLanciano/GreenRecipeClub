@@ -16,6 +16,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -215,14 +216,33 @@ public class ModelFirebase {
     public static Map<String, Object> toMap(Recipe recipe){
         HashMap<String, Object> map = new HashMap<>();
         map.put("recipeId", recipe.getRecipeId());
-        map.put("recipeName", recipe.getPublisherName());
+        map.put("recipeName", recipe.getRecipeName());
         map.put("categoryId", recipe.getCategoryId());
         map.put("recipeIngredients", recipe.getIngredient());
         map.put("recipeInstructions", recipe.getInstructions());
         map.put("recipeImgUrl", recipe.getRecipeImgUrl());
         map.put("userId", recipe.getPublisherId());
         map.put("username", recipe.getPublisherName());
+        map.put("lastUpdated", FieldValue.serverTimestamp());
         return map;
+    }
+
+    private static Recipe fromMap(Map<String, Object> json){
+        Recipe recipe = new Recipe();
+        recipe.setRecipeId((String) json.get("recipeId"));
+        recipe.setRecipeName((String) json.get("recipeName"));
+        recipe.setCategoryId((String) json.get("categoryId"));
+        recipe.setIngredient((String) json.get("recipeIngredients"));
+        recipe.setInstructions((String) json.get("recipeInstructions"));
+        recipe.setRecipeImgUrl((String) json.get("recipeImgUrl"));
+        recipe.setPublisherId((String) json.get("userId"));
+        recipe.setPublisherName((String) json.get("username"));
+        Timestamp ts = (Timestamp)json.get("lastUpdated");
+        if (ts != null)
+            recipe.setLastUpdated(ts.getSeconds());
+
+
+        return recipe;
     }
 
 
@@ -273,19 +293,7 @@ public class ModelFirebase {
     }
 
 
-    private static Recipe fromMap(Map<String, Object> json){
-        Recipe recipe = new Recipe();
-        recipe.setRecipeId((String) json.get("recipeId"));
-        recipe.setRecipeName((String) json.get("recipeName"));
-        recipe.setCategoryId((String) json.get("categoryId"));
-        recipe.setIngredient((String) json.get("recIngredients"));
-        recipe.setInstructions((String) json.get("recContent"));
-        recipe.setRecipeImgUrl((String) json.get("recipeImgUrl"));
-        recipe.setPublisherId((String) json.get("userId"));
-        recipe.setPublisherName((String) json.get("username"));
 
-        return recipe;
-    }
 
 
     public static void getDeletedRecipesId(final Model.Listener<List<String>> listener) {
@@ -306,7 +314,24 @@ public class ModelFirebase {
         });
     }
 
-
+    public static void deleteRecipe(Recipe recipe, final Model.Listener<Boolean> listener) {
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(RECIPE_COLLECTION).document(recipe.getRecipeId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Map<String,Object> deleted = new HashMap<>();
+                deleted.put("recipeId", recipe.getRecipeId());
+                db.collection("deleted").document(recipe.getRecipeId()).set(deleted).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (listener!=null){
+                            listener.onComplete(task.isSuccessful());
+                        }
+                    }
+                });
+            }
+        });
+    }
 
 
 }

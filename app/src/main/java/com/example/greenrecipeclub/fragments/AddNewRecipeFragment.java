@@ -78,10 +78,15 @@ public class AddNewRecipeFragment extends Fragment {
         uploadRecipeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uploadRecipeBtn.setEnabled(false);
                 if (imageUri != null && recipeName != null && ingredients != null && instruction != null )
                     saveRecipe();
-                else
+
+                else{
                     Toast.makeText(getContext(), "Please fill all fields and add a photo", Toast.LENGTH_SHORT).show();
+                    uploadRecipeBtn.setEnabled(true);
+                }
+
             }
         });
 
@@ -135,7 +140,6 @@ public class AddNewRecipeFragment extends Fragment {
         recipe.setInstructions(instruction.getText().toString());
         recipe.setRecipeImgUrl(User.getInstance().profileImageUrl);
         recipe.setPublisherId(User.getInstance().userId);
-        recipe.setRecipeImgUrl(User.getInstance().profileImageUrl);
         recipe.setPublisherName(User.getInstance().userName);
 
         return recipe;

@@ -30,7 +30,11 @@
         android:id="@+id/editRecipeFragment"
         android:name="com.example.greenrecipeclub.fragments.EditRecipeFragment"
         android:label="Edit recipe"
-        tools:layout="@layout/fragment_edit_recipe" />
+        tools:layout="@layout/fragment_edit_recipe" >
+        <argument
+            android:name="Recipe"
+            app:argType="com.example.greenrecipeclub.model.Recipe" />
+    </fragment>
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.example.greenrecipeclub.fragments.UserProfileFragment"
@@ -67,7 +71,7 @@
         tools:layout="@layout/fragment_add_new_recipe" />
     <fragment
         android:id="@+id/recipePageFragment"
-        android:name="com.example.greenrecipeclub.RecipePageFragment"
+        android:name="com.example.greenrecipeclub.fragments.RecipePageFragment"
         android:label="Recipe Details"
         tools:layout="@layout/fragment_recipe_page">
         <argument

@@ -53,4 +53,27 @@ public class DataWarehouse {
             }
         });
     }
+
+    public static void deleteImage(String imageUrl, final Listener listener)
+    {
+
+        Date date = new Date();
+        FirebaseStorage storageReference = FirebaseStorage.getInstance();
+        final StorageReference imageRef = storageReference.getReferenceFromUrl(imageUrl);
+
+        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid)
+            {
+                listener.onSuccess("");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e)
+            {
+                listener.onFail();
+            }
+        });
+    }
+
 }

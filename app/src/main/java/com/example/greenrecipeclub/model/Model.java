@@ -49,8 +49,18 @@ public class Model {
 
     @SuppressLint("StaticFieldLeak")
     public void deleteRecipe(final Recipe recipe, Listener<Boolean> listener) {
+        ModelFirebase.deleteRecipe(recipe, listener);
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                AppLocalDb.db.RecipeDao().deleteRecipe(recipe);
+                return "";
+            }
+        }.execute();
+
 
     }
+
 
     public void updateUserProfile(String username, String profileImgUrl, Listener<Boolean> listener) {
         ModelFirebase.updateUserProfile(username, profileImgUrl, listener);

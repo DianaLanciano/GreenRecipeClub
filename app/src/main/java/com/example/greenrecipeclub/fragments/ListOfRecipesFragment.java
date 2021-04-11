@@ -73,8 +73,6 @@ public class ListOfRecipesFragment extends Fragment {
                 Navigation.findNavController(view).navigate(action);
             }
         });
-
-        //live data
         liveData = viewList.getDataByCategory(category);
         liveData.observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
             @Override
@@ -100,13 +98,15 @@ public class ListOfRecipesFragment extends Fragment {
             }
         });
 
-
-
         return view;
 
 
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         //reference to row items

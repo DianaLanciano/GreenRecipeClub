@@ -53,6 +53,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:text="SAVE CHANGES!"
+        app:backgroundTint="#393EAE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/screen_editProfile_input_userNAme" />

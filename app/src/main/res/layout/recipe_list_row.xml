@@ -11,13 +11,14 @@
         android:id="@+id/row_inList_img_imgOfRecipe"
         android:layout_width="130dp"
         android:layout_height="130dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.648"
-        app:srcCompat="@drawable/fish"
-        tools:layout_editor_absoluteX="27dp" />
+        app:srcCompat="@drawable/fish" />
 
     <TextView
         android:id="@+id/row_inList_text_titleOfRecipe"

@@ -31,10 +31,11 @@ public class Recipe implements Serializable {
         this.publisherName = "";
         this.recipeImgUrl = "";
         this.instructions="";
+        this.ingredient = "";
     }
 
-    public Recipe(@NonNull String recipeId, String recipeName, String categoryId, String categoryName,
-                  String ingredient, String publisherId, String publisherName, String recipeImgUrl, long lastUpdated,String instructions) {
+    public Recipe(@NonNull String recipeId, String recipeName, String categoryId, String ingredient
+                 ,String instructions, String recipeImgUrl, String publisherId, String publisherName) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.categoryId = categoryId;
@@ -42,7 +43,6 @@ public class Recipe implements Serializable {
         this.publisherId = publisherId;
         this.publisherName = publisherName;
         this.recipeImgUrl = recipeImgUrl;
-        this.lastUpdated = lastUpdated;
         this.instructions = instructions;
     }
 
