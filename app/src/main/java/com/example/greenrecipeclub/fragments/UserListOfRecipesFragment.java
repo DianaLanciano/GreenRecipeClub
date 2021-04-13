@@ -79,7 +79,7 @@ public class UserListOfRecipesFragment extends Fragment {
         });
 
         //live data
-        liveData = viewModel.getDataByUser(userId);
+        liveData = viewModel.getUserData(userId);
         liveData.observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
 
             @Override
@@ -157,7 +157,7 @@ public class UserListOfRecipesFragment extends Fragment {
             recipe = recipeToBind;
             if (recipeToBind.getRecipeImgUrl() !=null)
             {
-                Picasso.get().load(recipeToBind.getRecipeImgUrl()).placeholder(R.drawable.hassa).into(recipeImg);
+                Picasso.get().load(recipeToBind.getRecipeImgUrl()).placeholder(R.drawable.mainlogo).into(recipeImg);
             }else {
                 recipeImg.setImageResource(R.drawable.ic_launcher_background);
             }

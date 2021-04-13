@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CCD9C3"
     tools:context=".fragments.ListOfRecipesFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -11,10 +12,10 @@
         android:layout_height="match_parent">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerlistOfrecipes_recipes_screen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecyclerlistOfrecipes_recipes_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

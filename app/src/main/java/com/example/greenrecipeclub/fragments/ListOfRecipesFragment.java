@@ -141,7 +141,7 @@ public class ListOfRecipesFragment extends Fragment {
             recipeCategory.setText(recipeToBind.getCategoryId());
             recipe = recipeToBind;
             if (recipeToBind.getRecipeImgUrl() != null) {
-                Picasso.get().load(recipeToBind.getRecipeImgUrl()).placeholder(R.drawable.hassa ).into(recipeImg);
+                Picasso.get().load(recipeToBind.getRecipeImgUrl()).placeholder(R.drawable.mainlogo ).into(recipeImg);
             } else {
                 recipeImg.setImageResource(R.drawable.ic_launcher_background);
             }
