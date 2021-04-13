@@ -140,5 +140,11 @@ public class Model {
         });
     }
 
+    public LiveData<List<Recipe>> getAllRecipesPerUser(String userId) {
+        LiveData<List<Recipe>> liveData = AppLocalDb.db.RecipeDao().getAllRecipesPerUser(userId);
+        refreshRecipesList(null);
+        return liveData;
+    }
+
 
 }

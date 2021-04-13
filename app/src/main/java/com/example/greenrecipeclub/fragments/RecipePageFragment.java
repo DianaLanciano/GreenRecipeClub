@@ -51,6 +51,7 @@ public class RecipePageFragment extends Fragment {
         instructions = view.findViewById(R.id.screen_singleRecipe_instructions);
         deleteBtn = view.findViewById(R.id.screen_singleRecipe_deleteRecipe);
 
+
         instructions.setMovementMethod(new ScrollingMovementMethod());
         ingredients.setMovementMethod(new ScrollingMovementMethod());
 
@@ -94,19 +95,14 @@ public class RecipePageFragment extends Fragment {
         }
 
 
-
-
         return view;
     }
 
 
     private void toEditRecipePage(Recipe recipe) {
-
         NavController navController = Navigation.findNavController(getActivity(),R.id.main_navhost);
-
-       RecipePageFragmentDirections.ActionRecipePageFragmentToEditRecipeFragment directions =RecipePageFragmentDirections.actionRecipePageFragmentToEditRecipeFragment(recipe);
-        navController.navigate(directions);
-
+        RecipePageFragmentDirections.ActionRecipePageFragmentToEditRecipeFragment action = RecipePageFragmentDirections.actionRecipePageFragmentToEditRecipeFragment(recipe);
+        navController.navigate(action);
     }
 
     private void deleteRecipe(Recipe recipeToDelete) {

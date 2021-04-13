@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.lifecycle.Observer;
@@ -23,7 +22,7 @@ import com.example.greenrecipeclub.R;
 import  com.example.greenrecipeclub.model.Model;
 import com.example.greenrecipeclub.model.Recipe;
 import com.squareup.picasso.Picasso;
-import com.example.greenrecipeclub.activities.MainActivity;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -85,7 +84,7 @@ public class ListOfRecipesFragment extends Fragment {
         });
 
 
-        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.feed_list_swipe_refresh);
+        final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.feed_list_swipe_refresh2);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
