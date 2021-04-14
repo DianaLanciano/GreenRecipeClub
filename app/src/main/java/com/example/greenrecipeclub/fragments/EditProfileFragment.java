@@ -62,7 +62,7 @@ public class EditProfileFragment extends Fragment {
         {
             @Override
             public void onClick(View view) {
-                chooseImageFromGallery();
+                uploadFromGallery();
             }
         });
 
@@ -137,7 +137,7 @@ public class EditProfileFragment extends Fragment {
 
     }
 
-    private void chooseImageFromGallery()
+    private void uploadFromGallery()
     {
 
         try{

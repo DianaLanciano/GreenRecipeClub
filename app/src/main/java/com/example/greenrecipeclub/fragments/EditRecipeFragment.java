@@ -87,7 +87,7 @@ public class EditRecipeFragment extends Fragment {
             @Override
             public void onClick(View view)
             {
-                chooseImageFromGallery();
+                uploadFromGallery();
             }
         });
 
@@ -182,7 +182,7 @@ public class EditRecipeFragment extends Fragment {
         ingChange.setText(recipe.getIngredient());
     }
 
-    private void chooseImageFromGallery()
+    private void uploadFromGallery()
     {
 
         try
