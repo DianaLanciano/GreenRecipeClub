@@ -9,7 +9,7 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/feed_list_swipe_refresh2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="655dp">
 
 
         <androidx.recyclerview.widget.RecyclerView

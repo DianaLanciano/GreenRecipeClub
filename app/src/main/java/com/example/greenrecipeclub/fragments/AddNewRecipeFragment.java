@@ -67,7 +67,7 @@ public class AddNewRecipeFragment extends Fragment {
         categoryList = (Spinner) view.findViewById(R.id.screen_newRcipe_spinner);
 
         addRecipeImg.setOnClickListener((view) -> {
-            chooseImageFromGallery();
+            uploadFromGallery();
         });
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MyApplication.context,
@@ -91,7 +91,7 @@ public class AddNewRecipeFragment extends Fragment {
     }
 
 
-    void chooseImageFromGallery() {
+    void uploadFromGallery() {
         try {
             Intent openGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
             openGalleryIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
