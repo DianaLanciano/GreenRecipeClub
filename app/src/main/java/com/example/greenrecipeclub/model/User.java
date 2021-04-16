@@ -1,7 +1,7 @@
 package com.example.greenrecipeclub.model;
 
 public class User {
-    private static User theUser = null;
+    private static User user = null;
 
     public String userName;
     public String email;
@@ -10,8 +10,7 @@ public class User {
     public String address;
     public String profileImageUrl;
 
-    private User()
-    {
+    private User() {
         userName = null;
         email = null;
         profileImageUrl = null;
@@ -20,11 +19,10 @@ public class User {
         userId = null;
     }
 
-    public static User getInstance()
-    {
-        if (theUser == null)
-            theUser = new User();
+    public static User getInstance() {
+        if (user == null)
+            user = new User();
 
-        return theUser;
+        return user;
     }
 }

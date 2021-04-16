@@ -23,19 +23,19 @@ public class Recipe implements Serializable {
     private long lastUpdated;
 
 
-    public Recipe(){
+    public Recipe() {
         this.recipeId = "";
         this.recipeName = "";
         this.categoryId = "";
         this.publisherId = "";
         this.publisherName = "";
         this.recipeImgUrl = "";
-        this.instructions="";
+        this.instructions = "";
         this.ingredient = "";
     }
 
     public Recipe(@NonNull String recipeId, String recipeName, String categoryId, String ingredient
-                 ,String instructions, String recipeImgUrl, String publisherId, String publisherName) {
+            , String instructions, String recipeImgUrl, String publisherId, String publisherName) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.categoryId = categoryId;

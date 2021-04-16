@@ -11,29 +11,29 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.lifecycle.Observer;
+
 import com.example.greenrecipeclub.R;
-import  com.example.greenrecipeclub.model.Model;
+import com.example.greenrecipeclub.fragments.VIewModels.categoryRecipesViewModel;
 import com.example.greenrecipeclub.model.Recipe;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class ListOfRecipesFragment extends Fragment {
-
-
-    RecyclerView list;
-    List<Recipe> data = new LinkedList<>();
-    String category;
+    RecyclerView recyclerView;
+    List<Recipe> recipeList = new LinkedList<>();
+    String categoryName;
     MyAdapter adapter;
-    listOfRecipesView viewList;
+    categoryRecipesViewModel categoryRecipesViewModel;
     LiveData<List<Recipe>> liveData;
 
     public ListOfRecipesFragment() {
@@ -44,7 +44,7 @@ public class ListOfRecipesFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-        viewList = new ViewModelProvider(this).get(listOfRecipesView.class);
+        categoryRecipesViewModel = new ViewModelProvider(this).get(categoryRecipesViewModel.class);
     }
 
     @Override
@@ -52,50 +52,33 @@ public class ListOfRecipesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_of_recipes, container, false);
-        category = ListOfRecipesFragmentArgs.fromBundle(getArguments()).getCategory();
-        Log.d("TAG","arg_category "+ category);
-        list = view.findViewById(R.id.RecyclerlistOfrecipes_recipes_screen);
-        list.setHasFixedSize(true);
+        categoryName = ListOfRecipesFragmentArgs.fromBundle(getArguments()).getCategory();
+        Log.d("TAG", "arg_category " + categoryName);
+        recyclerView = view.findViewById(R.id.RecyclerlistOfrecipes_recipes_screen);
+        recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        list.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
         adapter = new MyAdapter();
-        list.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
 
-        adapter.setOnClickListener(new OnItemClickListener() {
-            @Override
-            public void onClick(int position) {
-                Recipe recipe = data.get(position);
+        adapter.setOnClickListener(position -> {
+            Recipe recipe = recipeList.get(position);
 
-                ListOfRecipesFragmentDirections.ActionListOfRecipesFragmentToRecipePageFragment action = ListOfRecipesFragmentDirections.actionListOfRecipesFragmentToRecipePageFragment(recipe);
-                Navigation.findNavController(view).navigate(action);
-            }
+            ListOfRecipesFragmentDirections.ActionListOfRecipesFragmentToRecipePageFragment action = ListOfRecipesFragmentDirections.actionListOfRecipesFragmentToRecipePageFragment(recipe);
+            Navigation.findNavController(view).navigate(action);
         });
-        liveData = viewList.getDataByCategory(category);
-        liveData.observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
-            @Override
-            public void onChanged(List<Recipe> recipes) {
-
-                List<Recipe> reversedData = reverseData(recipes);
-                data = reversedData;
-                adapter.notifyDataSetChanged();
-            }
+        liveData = categoryRecipesViewModel.getDataByCategory(categoryName);
+        liveData.observe(getViewLifecycleOwner(), recipes -> {
+            Collections.reverse(recipes);
+            recipeList = recipes;
+            adapter.notifyDataSetChanged();
         });
 
 
         final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.feed_list_swipe_refresh2);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                viewList.refresh(new Model.CompListener() {
-                    @Override
-                    public void onComplete() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(() -> categoryRecipesViewModel.refresh(() -> swipeRefreshLayout.setRefreshing(false)));
 
         return view;
 
@@ -106,6 +89,7 @@ public class ListOfRecipesFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         //reference to row items
@@ -122,14 +106,11 @@ public class ListOfRecipesFragment extends Fragment {
             recipeCategory = itemView.findViewById(R.id.row_inList_text_category);
             recipePublisher = itemView.findViewById(R.id.row_inList_text_userName);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener != null){
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION)
-                            listener.onClick(position);
-                    }
+            itemView.setOnClickListener(view -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION)
+                        listener.onClick(position);
                 }
             });
 
@@ -141,7 +122,7 @@ public class ListOfRecipesFragment extends Fragment {
             recipeCategory.setText(recipeToBind.getCategoryId());
             recipe = recipeToBind;
             if (recipeToBind.getRecipeImgUrl() != null) {
-                Picasso.get().load(recipeToBind.getRecipeImgUrl()).placeholder(R.drawable.mainlogo ).into(recipeImg);
+                Picasso.get().load(recipeToBind.getRecipeImgUrl()).placeholder(R.drawable.mainlogo).into(recipeImg);
             } else {
                 recipeImg.setImageResource(R.drawable.ic_launcher_background);
             }
@@ -158,42 +139,32 @@ public class ListOfRecipesFragment extends Fragment {
     class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
         private OnItemClickListener listener;
-        void setOnClickListener(OnItemClickListener listener){ this.listener=listener; }
+
+        void setOnClickListener(OnItemClickListener listener) {
+            this.listener = listener;
+        }
 
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             //will run when we create row object
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.recipe_list_row, parent, false);
-            MyViewHolder recipeViewHolder = new MyViewHolder(view,listener);
-            return recipeViewHolder;
+            return new MyViewHolder(view, listener);
 
         }
 
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             //will run when binding row to data
-            Recipe recipe = data.get(position);
+            Recipe recipe = recipeList.get(position);
             holder.bind(recipe);
         }
 
         @Override
         public int getItemCount() {
-            return data.size();
+            return recipeList.size();
         }
     }
-
-
-    private List<Recipe> reverseData(List<Recipe> recipes) {
-        List<Recipe> reversedData = new LinkedList<>();
-        for (Recipe recipe: recipes) {
-            reversedData.add(0, recipe);
-        }
-        return reversedData;
-    }
-
-
-
 }
 
 

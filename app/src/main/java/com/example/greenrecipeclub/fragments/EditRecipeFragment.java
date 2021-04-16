@@ -37,23 +37,20 @@ import java.io.IOException;
 import static android.app.Activity.RESULT_OK;
 
 public class EditRecipeFragment extends Fragment {
-
-
-    View view;
+    View editRecipeView;
     Recipe recipe;
-    EditText titleChange;
-    ImageView theImage;
-    EditText ingChange;
-    EditText insChange;
-    ImageView editImgIcon;
-    Button saveBtn;
-    Spinner categories;
+    EditText recipeTitle;
+    ImageView imageView;
+    EditText ingredientsContent;
+    EditText instructionsContent;
+    ImageView editImageIcon;
+    Button saveButton;
+    Spinner categoriesDropdownSpinner;
     Uri recipeImageUri;
     Bitmap recipeImgBitmap;
     static int REQUEST_CODE = 1;
 
     public EditRecipeFragment() {
-        // Required empty public constructor
     }
 
 
@@ -61,108 +58,76 @@ public class EditRecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_edit_recipe, container, false);
-        titleChange = view.findViewById(R.id.screen_editRecipe_title);
-        categories = view.findViewById(R.id.screen_editRecipe_categorySpinner);
-        ingChange = view.findViewById(R.id.screen_editRecipe_ing);
-        insChange = view.findViewById(R.id.screen_editRecipe_ins);
-        editImgIcon = view.findViewById(R.id.screen_editRecipe_img);
-        saveBtn = view.findViewById(R.id.screen_editRecipe_saveBtn);
-        theImage = view.findViewById(R.id.screen_editRecipe_imgView);
+        editRecipeView = inflater.inflate(R.layout.fragment_edit_recipe, container, false);
+        recipeTitle = editRecipeView.findViewById(R.id.screen_editRecipe_title);
+        categoriesDropdownSpinner = editRecipeView.findViewById(R.id.screen_editRecipe_categorySpinner);
+        ingredientsContent = editRecipeView.findViewById(R.id.screen_editRecipe_ing);
+        instructionsContent = editRecipeView.findViewById(R.id.screen_editRecipe_ins);
+        editImageIcon = editRecipeView.findViewById(R.id.screen_editRecipe_img);
+        saveButton = editRecipeView.findViewById(R.id.screen_editRecipe_saveBtn);
+        imageView = editRecipeView.findViewById(R.id.screen_editRecipe_imgView);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MyApplication.context,
                 R.array.categoryArray, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categories.setAdapter(adapter);
+        categoriesDropdownSpinner.setAdapter(adapter);
 
         recipe = EditRecipeFragmentArgs.fromBundle(getArguments()).getRecipe();
 
-        if (recipe != null)
-        {
-            setEditRecipeHints();
+        if (recipe != null) {
+            // load recipe's content
+            loadRecipeContent();
         }
 
-        editImgIcon.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                chooseImageFromGallery();
-            }
-        });
+        editImageIcon.setOnClickListener(view -> getImageFromGallery());
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateRecipe();
-            }
-        });
+        saveButton.setOnClickListener(view -> updateRecipe());
 
 
-        return view;
+        return editRecipeView;
     }
 
+    private void navigateToRecipe(View editRecipeView) {
+        NavController navCtrl = Navigation.findNavController(editRecipeView);
+        navCtrl.navigateUp();
+    }
 
-    void updateRecipe()
-    {
-
-        if (recipeImageUri != null)
-        {
+    void updateRecipe() {
+        if (recipeImageUri != null) {
             DataWarehouse.imageUploading(recipeImgBitmap, new DataWarehouse.Listener() {
                 @Override
                 public void onSuccess(String url) {
-
-                    Model.instance.addRecipe(generatedEditedRecipe(url), new Model.Listener<Boolean>() {
-                        @Override
-                        public void onComplete(Boolean data)
-                        {
-                            NavController navCtrl = Navigation.findNavController(view);
-                            navCtrl.navigateUp();
-                            navCtrl.navigateUp();
-                        }
-                    });
+                    Model.instance.addRecipe(updateRecipeFields(url), data -> navigateToRecipe(editRecipeView));
                 }
 
                 @Override
-                public void onFail()
-                {
-                    Snackbar.make(view, "Failed to edit post", Snackbar.LENGTH_LONG).show();
+                public void onFail() {
+                    Snackbar.make(editRecipeView, "Failed to upload recipe's  image.", Snackbar.LENGTH_LONG).show();
                 }
             });
-        }
-        else {
-            Model.instance.addRecipe(generatedEditedRecipe(null), new Model.Listener<Boolean>() {
-                @Override
-                public void onComplete(Boolean data)
-                {
-                    NavController navCtrl = Navigation.findNavController(view);
-                    navCtrl.navigateUp();
-                    navCtrl.navigateUp();
-                }
-            });
+        } else {
+            Model.instance.addRecipe(updateRecipeFields(null), data -> navigateToRecipe(editRecipeView));
         }
 
     }
 
-    private Recipe generatedEditedRecipe(String imageUrl)
-    {
-
+    private Recipe updateRecipeFields(String imageUrl) {
         Recipe currentRecipe = recipe;
 
-        if (titleChange.getText().toString() != null && !titleChange.getText().toString().equals(""))
-            currentRecipe.setRecipeName(titleChange.getText().toString());
+        if (recipeTitle.getText().toString() != null && !recipeTitle.getText().toString().isEmpty())
+            currentRecipe.setRecipeName(recipeTitle.getText().toString());
         else currentRecipe.setRecipeName(recipe.getRecipeName());
 
-        if (ingChange.getText().toString() != null && !ingChange.getText().toString().equals(""))
-            currentRecipe.setIngredient(ingChange.getText().toString());
+        if (ingredientsContent.getText().toString() != null && !ingredientsContent.getText().toString().isEmpty())
+            currentRecipe.setIngredient(ingredientsContent.getText().toString());
         else currentRecipe.setIngredient(recipe.getIngredient());
 
-        if (insChange.getText().toString() != null && !insChange.getText().toString().equals(""))
-            currentRecipe.setInstructions( insChange.getText().toString());
+        if (instructionsContent.getText().toString() != null && !instructionsContent.getText().toString().isEmpty())
+            currentRecipe.setInstructions(instructionsContent.getText().toString());
         else currentRecipe.setInstructions(recipe.getInstructions());
 
-        if (categories.getSelectedItem().toString() != null && !categories.getSelectedItem().toString().equals(""))
-            currentRecipe.setCategoryId(categories.getSelectedItem().toString());
+        if (categoriesDropdownSpinner.getSelectedItem().toString() != null && !categoriesDropdownSpinner.getSelectedItem().toString().isEmpty())
+            currentRecipe.setCategoryId(categoriesDropdownSpinner.getSelectedItem().toString());
         else currentRecipe.setCategoryId(recipe.getRecipeId());
 
         if (imageUrl != null)
@@ -171,51 +136,41 @@ public class EditRecipeFragment extends Fragment {
         return currentRecipe;
     }
 
-    private void setEditRecipeHints()
-    {
-        if (recipe.getRecipeImgUrl() != null)
-        {
-            Picasso.get().load(recipe.getRecipeImgUrl()).noPlaceholder().into(theImage);
+    private void loadRecipeContent() {
+        if (recipe.getRecipeImgUrl() != null) {
+            Picasso.get().load(recipe.getRecipeImgUrl()).noPlaceholder().into(imageView);
         }
-        titleChange.setText(recipe.getRecipeName());
-        insChange.setText(recipe.getInstructions());
-        ingChange.setText(recipe.getIngredient());
+        recipeTitle.setText(recipe.getRecipeName());
+        instructionsContent.setText(recipe.getInstructions());
+        ingredientsContent.setText(recipe.getIngredient());
     }
 
-    private void chooseImageFromGallery()
-    {
-
-        try
-        {
+    private void getImageFromGallery() {
+        try {
             Intent openGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
             openGalleryIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
 
             startActivityForResult(openGalleryIntent, REQUEST_CODE);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Toast.makeText(getContext(), "Edit post Page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(data != null && resultCode == RESULT_OK){
+        if (data != null && resultCode == RESULT_OK) {
             recipeImageUri = data.getData();
-            theImage.setImageURI(recipeImageUri);
-            recipeImgBitmap = uriToBitmap(recipeImageUri);
+            imageView.setImageURI(recipeImageUri);
+            recipeImgBitmap = convertImageUriToBitmap(recipeImageUri);
 
-        }
-        else {
+        } else {
             Toast.makeText(getContext(), "No image was selected", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private Bitmap uriToBitmap(Uri selectedFileUri)
-    {
+    private Bitmap convertImageUriToBitmap(Uri selectedFileUri) {
         try {
             ParcelFileDescriptor parcelFileDescriptor = getContext().getContentResolver().openFileDescriptor(selectedFileUri, "r");
             FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
@@ -228,7 +183,6 @@ public class EditRecipeFragment extends Fragment {
         }
         return null;
     }
-
 
 
 }

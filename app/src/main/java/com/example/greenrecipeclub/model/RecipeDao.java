@@ -23,10 +23,11 @@ public interface RecipeDao {
 
     @Query("select * from Recipe where recipeId = :recipeId")
     Recipe GetRecipeById(String recipeId);
+
     //inserting and updating
     //... is used when we don't know how many arguments will pass..it can be 0 Recipe, 1 or more...
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAllRecipes(Recipe...recipes);
+    void insertAllRecipes(Recipe... recipes);
 
     @Delete
     void deleteRecipe(Recipe recipe);

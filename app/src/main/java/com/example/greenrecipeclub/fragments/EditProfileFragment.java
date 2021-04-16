@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import static android.app.Activity.RESULT_OK;
+
 import com.example.greenrecipeclub.R;
 import com.example.greenrecipeclub.model.DataWarehouse;
 import com.example.greenrecipeclub.model.Model;
@@ -35,16 +36,15 @@ import java.io.IOException;
 
 public class EditProfileFragment extends Fragment {
 
-    View view;
-    ImageView userImg;
-    EditText userNameInput;
-    Button saveChangesBtn;
-    Uri profileImageUrl;
+    View editProfileView;
+    ImageView userImage;
+    EditText userNameInputField;
+    Button saveChangesButton;
+    Uri profileImageUri;
     Bitmap postImgBitmap;
     static int REQUEST_CODE = 1;
 
     public EditProfileFragment() {
-        // Required empty public constructor
     }
 
 
@@ -52,123 +52,88 @@ public class EditProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
+        editProfileView = inflater.inflate(R.layout.fragment_edit_profile, container, false);
 
-        userImg =view.findViewById(R.id.screen_editProfile_img_profileImg);
-        userNameInput = view.findViewById(R.id.screen_editProfile_input_userNAme);
-        saveChangesBtn = view.findViewById(R.id.screen_editProfile_btn_saveChange);
+        userImage = editProfileView.findViewById(R.id.screen_editProfile_img_profileImg);
+        userNameInputField = editProfileView.findViewById(R.id.screen_editProfile_input_userNAme);
+        saveChangesButton = editProfileView.findViewById(R.id.screen_editProfile_btn_saveChange);
 
-        userImg.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                chooseImageFromGallery();
-            }
-        });
+        userImage.setOnClickListener(view -> chooseImageFromGallery());
 
-        saveChangesBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                updateUserProfile();
-            }
-        });
-        setEditProfileHints();
+        saveChangesButton.setOnClickListener(view -> updateUserProfile());
+        setEditProfileContent();
 
-        return view;
+        return editProfileView;
     }
 
 
-    private void setEditProfileHints()
-    {
+    private void setEditProfileContent() {
         if (User.getInstance().profileImageUrl != null)
-        {
-            Picasso.get().load(User.getInstance().profileImageUrl).noPlaceholder().into(userImg);
-        }
-        userNameInput.setHint(User.getInstance().userName);
+            Picasso.get().load(User.getInstance().profileImageUrl).noPlaceholder().into(userImage);
+        userNameInputField.setHint(User.getInstance().userName);
     }
-    void updateUserProfile()
-    {
-        final String username;
-        if (userNameInput.getText().toString() != null && !userNameInput.getText().toString().equals(""))
-            username = userNameInput.getText().toString();
-        else username = User.getInstance().userName;
 
-        if (profileImageUrl != null)
-        {
+    void updateUserProfile() {
+        final String userName;
+        if (userNameInputField.getText().toString() != null && !userNameInputField.getText().toString().isEmpty())
+            userName = userNameInputField.getText().toString();
+        else userName = User.getInstance().userName;
+
+        if (profileImageUri != null) {
             DataWarehouse.imageUploading(postImgBitmap, new DataWarehouse.Listener() {
                 @Override
-                public void onSuccess(String url)
-                {
-
-                    Model.instance.updateUserProfile(username, url,new Model.Listener<Boolean>()
-                    {
-                        @Override
-                        public void onComplete(Boolean data)
-                        {
-                            Model.instance.setUserAppData(User.getInstance().email);
-                            NavController navCtrl = Navigation.findNavController(view);
-                            navCtrl.navigateUp();
-                            navCtrl.navigateUp();
-                        }
+                public void onSuccess(String uri) {
+                    Model.instance.updateUserProfile(userName, uri, data -> {
+                        Model.instance.setUserEmail(User.getInstance().email);
+                        NavController navCtrl = Navigation.findNavController(editProfileView);
+                        navCtrl.navigateUp();
+                        navCtrl.navigateUp();
                     });
                 }
 
                 @Override
-                public void onFail()
-                {
-                    Snackbar.make(view, "Failed to edit profile", Snackbar.LENGTH_LONG).show();
+                public void onFail() {
+                    Snackbar.make(editProfileView, "Failed to edit user's profile.", Snackbar.LENGTH_LONG).show();
                 }
             });
-        }
-        else {
-            Model.instance.updateUserProfile(username,null, new Model.Listener<Boolean>() {
-                @Override
-                public void onComplete(Boolean data)
-                {
-                    Model.instance.setUserAppData(User.getInstance().email);
-                    NavController navCtrl = Navigation.findNavController(view);
-                    navCtrl.navigateUp();
-                    navCtrl.navigateUp();
-                }
+        } else {
+            Model.instance.updateUserProfile(userName, null, data -> {
+                Model.instance.setUserEmail(User.getInstance().email);
+                NavController navCtrl = Navigation.findNavController(editProfileView);
+                navCtrl.navigateUp();
+                navCtrl.navigateUp();
             });
         }
 
     }
 
-    private void chooseImageFromGallery()
-    {
-
-        try{
+    private void chooseImageFromGallery() {
+        try {
             Intent openGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
             openGalleryIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
 
             startActivityForResult(openGalleryIntent, REQUEST_CODE);
-        }
-        catch (Exception e){
-            Toast.makeText(getContext(), "Edit profile Page: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Failed to choose image from gallery: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1 && resultCode == RESULT_OK && data != null){
-            profileImageUrl = data.getData();
-            userImg.setImageURI(profileImageUrl);
-            postImgBitmap = uriToBitmap(profileImageUrl);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            profileImageUri = data.getData();
+            userImage.setImageURI(profileImageUri);
+            //todo: extract method to utils
+            postImgBitmap = convertImageUriToBitmap(profileImageUri);
 
-        }
-        else {
-            Toast.makeText(getContext(), "No image was selected", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Profile image wasn't selected.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private Bitmap uriToBitmap(Uri selectedFileUri)
-    {
+    private Bitmap convertImageUriToBitmap(Uri selectedFileUri) {
         try {
             ParcelFileDescriptor parcelFileDescriptor = getContext().getContentResolver().openFileDescriptor(selectedFileUri, "r");
             FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();

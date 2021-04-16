@@ -31,6 +31,7 @@ import com.example.greenrecipeclub.MyApplication;
 import com.example.greenrecipeclub.R;
 import com.example.greenrecipeclub.model.Recipe;
 import com.google.android.material.snackbar.Snackbar;
+
 import static android.app.Activity.RESULT_OK;
 
 import java.io.FileDescriptor;
@@ -51,7 +52,6 @@ public class AddNewRecipeFragment extends Fragment {
     Bitmap convertedImg;
 
     public AddNewRecipeFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -75,22 +75,17 @@ public class AddNewRecipeFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryList.setAdapter(adapter);
 
-        uploadRecipeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uploadRecipeBtn.setEnabled(false);
-                if (imageUri != null && recipeName != null && ingredients != null && instruction != null )
-                    saveRecipe();
+        uploadRecipeBtn.setOnClickListener(v -> {
+            uploadRecipeBtn.setEnabled(false);
+            if (imageUri != null && recipeName != null && ingredients != null && instruction != null)
+                saveRecipe();
 
-                else{
-                    Toast.makeText(getContext(), "Please fill all fields and add a photo", Toast.LENGTH_SHORT).show();
-                    uploadRecipeBtn.setEnabled(true);
-                }
-
+            else {
+                Toast.makeText(getContext(), "Please fill all fields and add a photo", Toast.LENGTH_SHORT).show();
+                uploadRecipeBtn.setEnabled(true);
             }
+
         });
-
-
 
         return view;
     }
@@ -110,23 +105,20 @@ public class AddNewRecipeFragment extends Fragment {
 
     void saveRecipe() {
         final Recipe recipe = createRecipe();
-        Log.i("Tag","get to save recipe");
+        Log.i("Tag", "Saving recipe");
         DataWarehouse.imageUploading(convertedImg, new DataWarehouse.Listener() {
             @Override
             public void onSuccess(String url) {
                 recipe.setRecipeImgUrl(url);
-                Model.instance.addRecipe(recipe, new Model.Listener<Boolean>() {
-                    @Override
-                    public void onComplete(Boolean data) {
-                        NavController navCtrl = Navigation.findNavController(view);
-                        navCtrl.navigateUp();
-                    }
+                Model.instance.addRecipe(recipe, data -> {
+                    NavController navCtrl = Navigation.findNavController(view);
+                    navCtrl.navigateUp();
                 });
             }
 
             @Override
             public void onFail() {
-                Snackbar.make(view, "Failed to create post recipe and save it in databases", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "Failed to save recipe in database", Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -148,16 +140,16 @@ public class AddNewRecipeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if ( data != null && resultCode == RESULT_OK) {
+        if (data != null && resultCode == RESULT_OK) {
             imageUri = data.getData();
             addRecipeImg.setImageURI(imageUri);
-            convertedImg = uriToBitmap(imageUri);
+            convertedImg = convertImageToBitmap(imageUri);
         } else {
             Toast.makeText(getActivity(), "No image was selected", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private Bitmap uriToBitmap(Uri selectedFileUri) {
+    private Bitmap convertImageToBitmap(Uri selectedFileUri) {
         try {
             ParcelFileDescriptor parcelFileDescriptor = getContext().getContentResolver().openFileDescriptor(selectedFileUri, "r");
             FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();

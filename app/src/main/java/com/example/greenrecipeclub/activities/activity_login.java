@@ -30,8 +30,7 @@ public class activity_login extends AppCompatActivity {
         registerBtn = findViewById(R.id.registerB_loginScreen);
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 toRegisterPage();
             }
         });
@@ -42,35 +41,25 @@ public class activity_login extends AppCompatActivity {
         emailInput = findViewById(R.id.screen_login_input_email);
         passwordInput = findViewById(R.id.screen_login_input_password);
 
-        if(firebaseAuth.getCurrentUser()!=null)
-        {
-            ModelFirebase.setUserAppData(firebaseAuth.getCurrentUser().getEmail());
-            startActivity(new Intent(activity_login.this,MainActivity.class));
+        if (firebaseAuth.getCurrentUser() != null) {
+            ModelFirebase.setUserEmail(firebaseAuth.getCurrentUser().getEmail());
+            startActivity(new Intent(activity_login.this, MainActivity.class));
             finish();
         }
         this.setTitle("Login");
 
         loginBtn = findViewById(R.id.screen_login_btn_login);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        loginBtn.setOnClickListener(view -> ModelFirebase.setUserLogin(emailInput.getText().toString(), passwordInput.getText().toString(), new ModelFirebase.Listener<Boolean>() {
             @Override
-            public void onClick(View view)
-            {
-                ModelFirebase.setUserLogin(emailInput.getText().toString(), passwordInput.getText().toString(), new ModelFirebase.Listener<Boolean>() {
-                    @Override
-                    public void onComplete()
-                    {
-                        startActivity(new Intent(activity_login.this, MainActivity.class));
-                        activity_login.this.finish();
-                    }
-
-                    @Override
-                    public void onFail()
-                    {
-
-                    }
-                });
+            public void onComplete() {
+                startActivity(new Intent(activity_login.this, MainActivity.class));
+                activity_login.this.finish();
             }
-        });
+
+            @Override
+            public void onFail() {
+            }
+        }));
 
 
     }
