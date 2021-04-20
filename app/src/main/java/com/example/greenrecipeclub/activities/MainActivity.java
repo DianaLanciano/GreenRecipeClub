@@ -12,8 +12,9 @@ import android.view.MenuItem;
 import com.example.greenrecipeclub.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
     NavController navController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,18 +26,15 @@ public class MainActivity extends AppCompatActivity{
         NavigationUI.setupActionBarWithNavController(this, navController);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_manu);
-        NavigationUI.setupWithNavController(bottomNav,navController);
+        NavigationUI.setupWithNavController(bottomNav, navController);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == android.R.id.home)
-        {
+        if (item.getItemId() == android.R.id.home) {
             navController.navigateUp();
             return true;
-        }
-        else
-        {
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }

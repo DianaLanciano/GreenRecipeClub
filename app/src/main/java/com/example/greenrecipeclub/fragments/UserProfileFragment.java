@@ -21,17 +21,15 @@ import com.example.greenrecipeclub.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 
 public class UserProfileFragment extends Fragment {
 
     TextView userName;
     TextView email;
-    ImageView editBtn;
-    ImageView userImg;
-    Button myRecipesListBtn;
-    Button logoutBtn;
+    ImageView editButton;
+    ImageView userImage;
+    Button userRecipesListButton;
+    Button logoutButton;
 
     public UserProfileFragment() {
         // Required empty public constructor
@@ -39,47 +37,24 @@ public class UserProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
-        userImg = view.findViewById(R.id.screen_profile_img_userImg);
+        userImage = view.findViewById(R.id.screen_profile_img_userImg);
         userName = view.findViewById(R.id.screen_profile_text_username);
         email = view.findViewById(R.id.screen_profile_text_email);
-        editBtn = view.findViewById(R.id.screen_profile_img_edirprofile);
-        myRecipesListBtn = view.findViewById(R.id.screen_profile_btn_userRecipes);
-        logoutBtn = view.findViewById(R.id.screen_profile_btn_logout);
+        editButton = view.findViewById(R.id.screen_profile_img_edirprofile);
+        userRecipesListButton = view.findViewById(R.id.screen_profile_btn_userRecipes);
+        logoutButton = view.findViewById(R.id.screen_profile_btn_logout);
 
-        myRecipesListBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                toEditProfilePage();
-            }
+        userRecipesListButton.setOnClickListener(view1 -> toEditProfilePage());
+
+        userRecipesListButton.setOnClickListener(v -> {
+            UserProfileFragmentDirections.ActionUserProfileFragmentToUserListOfRecipesFragment action = UserProfileFragmentDirections.actionUserProfileFragmentToUserListOfRecipesFragment(User.getInstance().userId);
+            Navigation.findNavController(view).navigate(action);
         });
 
-        myRecipesListBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                UserProfileFragmentDirections.ActionUserProfileFragmentToUserListOfRecipesFragment action = UserProfileFragmentDirections.actionUserProfileFragmentToUserListOfRecipesFragment(User.getInstance().userId);
-                Navigation.findNavController(view).navigate(action);
-            }
-        });
+        logoutButton.setOnClickListener(v -> toLoginPage());
 
-        logoutBtn.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) { toLoginPage();}
-
-        });
-
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toEditProfilePage();
-            }
-        });
+        editButton.setOnClickListener(v -> toEditProfilePage());
 
 
         setUserDetails();
@@ -91,9 +66,8 @@ public class UserProfileFragment extends Fragment {
         userName.setText(User.getInstance().userName);
         email.setText(User.getInstance().email);
 
-        if (User.getInstance().profileImageUrl != null)
-        {
-            Picasso.get().load(User.getInstance().profileImageUrl).noPlaceholder().into(userImg);
+        if (User.getInstance().profileImageUrl != null) {
+            Picasso.get().load(User.getInstance().profileImageUrl).noPlaceholder().into(userImage);
         }
     }
 

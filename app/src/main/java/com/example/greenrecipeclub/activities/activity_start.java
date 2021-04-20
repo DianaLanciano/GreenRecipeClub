@@ -15,25 +15,23 @@ public class activity_start extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        new Thread(){
+        new Thread() {
             public void run() {
                 try {
                     sleep(3000);
-                } catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
                     toLoginPage();
                 }
             }
         }.start();
-        
-        
+
+
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         finish();
     }

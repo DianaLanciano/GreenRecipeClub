@@ -13,8 +13,6 @@ import com.example.greenrecipeclub.model.ModelFirebase;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class activity_login extends AppCompatActivity {
-
-
     EditText emailInput;
     EditText passwordInput;
     Button loginBtn;
@@ -28,49 +26,30 @@ public class activity_login extends AppCompatActivity {
 
         firebaseAuth = firebaseAuth.getInstance();
         registerBtn = findViewById(R.id.registerB_loginScreen);
-        registerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                toRegisterPage();
-            }
-        });
-
-
-        /////////////////////////////////////////
+        registerBtn.setOnClickListener(view -> toRegisterPage());
 
         emailInput = findViewById(R.id.screen_login_input_email);
         passwordInput = findViewById(R.id.screen_login_input_password);
 
-        if(firebaseAuth.getCurrentUser()!=null)
-        {
+        if (firebaseAuth.getCurrentUser() != null) {
             ModelFirebase.setUserAppData(firebaseAuth.getCurrentUser().getEmail());
-            startActivity(new Intent(activity_login.this,MainActivity.class));
+            startActivity(new Intent(activity_login.this, MainActivity.class));
             finish();
         }
         this.setTitle("Login");
 
         loginBtn = findViewById(R.id.screen_login_btn_login);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        loginBtn.setOnClickListener(view -> ModelFirebase.setUserLogin(emailInput.getText().toString(), passwordInput.getText().toString(), new ModelFirebase.Listener<Boolean>() {
             @Override
-            public void onClick(View view)
-            {
-                ModelFirebase.setUserLogin(emailInput.getText().toString(), passwordInput.getText().toString(), new ModelFirebase.Listener<Boolean>() {
-                    @Override
-                    public void onComplete()
-                    {
-                        startActivity(new Intent(activity_login.this, MainActivity.class));
-                        activity_login.this.finish();
-                    }
-
-                    @Override
-                    public void onFail()
-                    {
-
-                    }
-                });
+            public void onComplete() {
+                startActivity(new Intent(activity_login.this, MainActivity.class));
+                activity_login.this.finish();
             }
-        });
+
+            @Override
+            public void onFail() {
+            }
+        }));
 
 
     }

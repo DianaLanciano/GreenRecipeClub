@@ -2,6 +2,11 @@ package com.example.greenrecipeclub.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,30 +17,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import androidx.lifecycle.Observer;
-
 import com.example.greenrecipeclub.R;
-import com.example.greenrecipeclub.model.Model;
 import com.example.greenrecipeclub.model.Recipe;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 
-
 public class UserListOfRecipesFragment extends Fragment {
-
-
     String userId;
-    RecyclerView list;
+    RecyclerView recyclerView;
     List<Recipe> data = new LinkedList<>();
     UserListOfRecipesFragment.MyRecipeListAdapter adapter;
     MyListViewModel viewModel;
@@ -44,6 +37,7 @@ public class UserListOfRecipesFragment extends Fragment {
     public UserListOfRecipesFragment() {
         // Required empty public constructor
     }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -59,62 +53,36 @@ public class UserListOfRecipesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_list_of_recipes, container, false);
         userId = UserListOfRecipesFragmentArgs.fromBundle(getArguments()).getUserId();
 
-        list= view.findViewById(R.id.screen_userRecipes_recyclerView);
-        list.setHasFixedSize(true);
+        recyclerView = view.findViewById(R.id.screen_userRecipes_recyclerView);
+        recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        list.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
         adapter = new MyRecipeListAdapter();
 
-        list.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
 
-        adapter.setOnClickListener(new UserListOfRecipesFragment.OnItemClickListener() {
-            @Override
-            public void onClick(int position) {
-                Recipe recipe = data.get(position);
-                UserListOfRecipesFragmentDirections.ActionUserListOfRecipesFragmentToRecipePageFragment action = UserListOfRecipesFragmentDirections.actionUserListOfRecipesFragmentToRecipePageFragment(recipe);
-                Navigation.findNavController(view).navigate(action);
-            }
+        adapter.setOnClickListener(position -> {
+            Recipe recipe = data.get(position);
+            UserListOfRecipesFragmentDirections.ActionUserListOfRecipesFragmentToRecipePageFragment action = UserListOfRecipesFragmentDirections.actionUserListOfRecipesFragmentToRecipePageFragment(recipe);
+            Navigation.findNavController(view).navigate(action);
         });
 
         //live data
         liveData = viewModel.getUserData(userId);
-        liveData.observe(getViewLifecycleOwner(), new Observer<List<Recipe>>() {
+        liveData.observe(getViewLifecycleOwner(), recipes -> {
 
-            @Override
-            public void onChanged(List<Recipe> recipes) {
-
-                List<Recipe> reversedData = reverseData(recipes);
-                data = reversedData;
-                adapter.notifyDataSetChanged();
-            }
+            Collections.reverse(recipes);
+            data = recipes;
+            adapter.notifyDataSetChanged();
         });
 
 
         final SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.feed_list_swipe_refresh2);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                viewModel.refresh(new Model.CompListener() {
-                    @Override
-                    public void onComplete() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(() -> viewModel.refresh(() -> swipeRefreshLayout.setRefreshing(false)));
 
         return view;
-    }
-
-
-    private List<Recipe> reverseData(List<Recipe> recipes) {
-        List<Recipe> reversedData = new LinkedList<>();
-        for (Recipe recipe: recipes) {
-            reversedData.add(0, recipe);
-        }
-        return reversedData;
     }
 
     @Override
@@ -122,46 +90,39 @@ public class UserListOfRecipesFragment extends Fragment {
         super.onDetach();
     }
 
-    static class MyRecipeViewHolder extends RecyclerView.ViewHolder {
-
+    static class RecipeViewHolder extends RecyclerView.ViewHolder {
         TextView recipeTitle;
-        ImageView recipeImg;
+        ImageView recipeImage;
         TextView username;
         TextView category;
         Recipe recipe;
 
-        public MyRecipeViewHolder(@NonNull View itemView, final UserListOfRecipesFragment.OnItemClickListener listener) {
+        public RecipeViewHolder(@NonNull View itemView, final UserListOfRecipesFragment.OnItemClickListener listener) {
             super(itemView);
-
             recipeTitle = itemView.findViewById(R.id.row_inList_text_titleOfRecipe);
-            recipeImg = itemView.findViewById(R.id.row_inList_img_imgOfRecipe);
+            recipeImage = itemView.findViewById(R.id.row_inList_img_imgOfRecipe);
             username = itemView.findViewById(R.id.row_inList_text_userName);
             category = itemView.findViewById(R.id.row_inList_text_category);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (listener != null){
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION)
-                            listener.onClick(position);
-                    }
+            itemView.setOnClickListener(view -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION)
+                        listener.onClick(position);
                 }
             });
         }
 
-        public void bind(Recipe recipeToBind){
+        public void bindRecipe(Recipe recipeToBind) {
             recipeTitle.setText(recipeToBind.getRecipeName());
             category.setText(recipeToBind.getCategoryId());
             username.setText(recipeToBind.getPublisherName());
             recipe = recipeToBind;
-            if (recipeToBind.getRecipeImgUrl() !=null)
-            {
-                Picasso.get().load(recipeToBind.getRecipeImgUrl()).placeholder(R.drawable.mainlogo).into(recipeImg);
-            }else {
-                recipeImg.setImageResource(R.drawable.ic_launcher_background);
+            if (recipeToBind.getRecipeImgUrl() != null) {
+                Picasso.get().load(recipeToBind.getRecipeImgUrl()).placeholder(R.drawable.mainlogo).into(recipeImage);
+            } else {
+                recipeImage.setImageResource(R.drawable.ic_launcher_background);
             }
-
         }
     }
 
@@ -170,35 +131,33 @@ public class UserListOfRecipesFragment extends Fragment {
     }
 
 
-    class MyRecipeListAdapter extends RecyclerView.Adapter<MyRecipeViewHolder> {
-
+    class MyRecipeListAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
         private OnItemClickListener listener;
 
-        void setOnClickListener(OnItemClickListener listener){ this.listener=listener; }
+        void setOnClickListener(OnItemClickListener listener) {
+            this.listener = listener;
+        }
 
         @NonNull
         @Override
-        public MyRecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public RecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             //create row
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.recipe_list_row,parent,false);
-            UserListOfRecipesFragment.MyRecipeViewHolder myrecipeViewHolder = new UserListOfRecipesFragment.MyRecipeViewHolder(view,listener);
-            return myrecipeViewHolder;
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.recipe_list_row, parent, false);
+            RecipeViewHolder recipeViewHolder = new RecipeViewHolder(view, listener);
+            return recipeViewHolder;
         }
 
         @Override
-        public void onBindViewHolder(@NonNull MyRecipeViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
             Recipe recipe = data.get(position);
-            holder.bind(recipe);
+            holder.bindRecipe(recipe);
         }
 
-
         @Override
-        public int getItemCount() {return data.size();}
+        public int getItemCount() {
+            return data.size();
+        }
     }
-
-
-
-
 
 
 }

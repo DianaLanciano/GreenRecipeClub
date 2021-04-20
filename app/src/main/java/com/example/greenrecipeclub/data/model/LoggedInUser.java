@@ -5,8 +5,8 @@ package com.example.greenrecipeclub.data.model;
  */
 public class LoggedInUser {
 
-    private String userId;
-    private String displayName;
+    private final String userId;
+    private final String displayName;
 
     public LoggedInUser(String userId, String displayName) {
         this.userId = userId;
@@ -17,7 +17,4 @@ public class LoggedInUser {
         return userId;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
 }

@@ -10,8 +10,7 @@ public class User {
     public String address;
     public String profileImageUrl;
 
-    private User()
-    {
+    private User() {
         userName = null;
         email = null;
         profileImageUrl = null;
@@ -20,8 +19,7 @@ public class User {
         userId = null;
     }
 
-    public static User getInstance()
-    {
+    public static User getInstance() {
         if (theUser == null)
             theUser = new User();
 

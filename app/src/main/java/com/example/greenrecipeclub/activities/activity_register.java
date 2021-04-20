@@ -19,7 +19,6 @@ import com.example.greenrecipeclub.model.Utils;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class activity_register extends AppCompatActivity {
-
     ImageView profileImage;
     EditText email;
     EditText username;
@@ -27,7 +26,6 @@ public class activity_register extends AppCompatActivity {
     Button registerBtn;
     Button loginBtn;
     Uri profileImageUri;
-    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,37 +41,22 @@ public class activity_register extends AppCompatActivity {
         profileImageUri = null;
 
 
-        profileImage.setOnClickListener(new View.OnClickListener() {
+        profileImage.setOnClickListener(v -> Utils.uploadImgFromGallery(activity_register.this));
+
+        registerBtn.setOnClickListener(view -> ModelFirebase.registerUser(username.getText().toString(), password.getText().toString(), email.getText().toString(), profileImageUri, new ModelFirebase.Listener<Boolean>() {
             @Override
-            public void onClick(View v) {
-                Utils.uploadImgFromGallery(activity_register.this);
+            public void onComplete() {
+                activity_register.this.finish();
             }
-        });
 
-        registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                ModelFirebase.registerUser(username.getText().toString(), password.getText().toString(), email.getText().toString(), profileImageUri, new ModelFirebase.Listener<Boolean>() {
-                    @Override
-                    public void onComplete() {
-                        activity_register.this.finish();
-                    }
+            public void onFail() {
 
-                    @Override
-                    public void onFail() {
-
-                    }
-                });
             }
-        });
+        }));
 
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toLoginPage();
-            }
-        });
+        loginBtn.setOnClickListener(v -> toLoginPage());
 
     }
 
@@ -85,18 +68,14 @@ public class activity_register extends AppCompatActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(data != null && resultCode == RESULT_OK){
+        if (data != null && resultCode == RESULT_OK) {
             profileImageUri = data.getData();
             profileImage.setImageURI(profileImageUri);
-        }
-        else {
-            Toast.makeText(this, "No image was selected", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Please select an image!", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }

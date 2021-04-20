@@ -34,7 +34,6 @@ public class RecipePageFragment extends Fragment {
     Recipe recipe;
 
     public RecipePageFragment() {
-        // Required empty public constructor
     }
 
 
@@ -42,12 +41,12 @@ public class RecipePageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       view = inflater.inflate(R.layout.fragment_recipe_page, container, false);
+        view = inflater.inflate(R.layout.fragment_recipe_page, container, false);
 
         title = view.findViewById(R.id.screen_singleRecipe_title);
         recipeImg = view.findViewById(R.id.screen_singleRecipe_img);
         editRecipeIcon = view.findViewById(R.id.screen_singleRecipe_editIcon);
-        ingredients =  view.findViewById(R.id.screen_singleRecipe_ingreadents);
+        ingredients = view.findViewById(R.id.screen_singleRecipe_ingreadents);
         instructions = view.findViewById(R.id.screen_singleRecipe_instructions);
         deleteBtn = view.findViewById(R.id.screen_singleRecipe_deleteRecipe);
 
@@ -57,17 +56,16 @@ public class RecipePageFragment extends Fragment {
 
 
         recipe = RecipePageFragmentArgs.fromBundle(getArguments()).getRecipe();
-        if (recipe !=null){
+        if (recipe != null) {
 
 
             title.setText(recipe.getRecipeName());
             ingredients.setText(recipe.getIngredient());
             instructions.setText(recipe.getInstructions());
 
-            if (recipe.getRecipeImgUrl() != null)
-            {
+            if (recipe.getRecipeImgUrl() != null) {
                 Picasso.get().load(recipe.getRecipeImgUrl()).placeholder(R.drawable.mainlogo).into(recipeImg);
-            }else {
+            } else {
                 recipeImg.setImageResource(R.drawable.ic_launcher_background);
             }
 
@@ -75,23 +73,12 @@ public class RecipePageFragment extends Fragment {
         editRecipeIcon.setVisibility(view.INVISIBLE);
         deleteBtn.setVisibility(view.INVISIBLE);
 
-        if (recipe.getPublisherId().equals(User.getInstance().userId))
-        {
+        if (recipe.getPublisherId().equals(User.getInstance().userId)) {
             editRecipeIcon.setVisibility(view.VISIBLE);
-            editRecipeIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    toEditRecipePage(recipe);
-                }
-            });
+            editRecipeIcon.setOnClickListener(v -> toEditRecipePage(recipe));
 
             deleteBtn.setVisibility(view.VISIBLE);
-            deleteBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    deleteRecipe(recipe);
-                }
-            });
+            deleteBtn.setOnClickListener(v -> deleteRecipe(recipe));
         }
 
 
@@ -100,30 +87,24 @@ public class RecipePageFragment extends Fragment {
 
 
     private void toEditRecipePage(Recipe recipe) {
-        NavController navController = Navigation.findNavController(getActivity(),R.id.main_navhost);
+        NavController navController = Navigation.findNavController(getActivity(), R.id.main_navhost);
         RecipePageFragmentDirections.ActionRecipePageFragmentToEditRecipeFragment action = RecipePageFragmentDirections.actionRecipePageFragmentToEditRecipeFragment(recipe);
         navController.navigate(action);
     }
 
     private void deleteRecipe(Recipe recipeToDelete) {
 
-        Model.instance.deleteRecipe(recipeToDelete, new Model.Listener<Boolean>() {
+        Model.instance.deleteRecipe(recipeToDelete, data -> DataWarehouse.deleteImage(recipe.getRecipeImgUrl(), new DataWarehouse.Listener() {
             @Override
-            public void onComplete(Boolean data) {
-                DataWarehouse.deleteImage(recipe.getRecipeImgUrl(), new DataWarehouse.Listener() {
-                    @Override
-                    public void onSuccess(String url) {
-                        NavController navController = Navigation.findNavController(view);
-                        navController.navigateUp();
-                    }
-
-                    @Override
-                    public void onFail() {
-
-                        Snackbar.make(view,"Failed to delete recipe in database",Snackbar.LENGTH_LONG).show();
-                    }
-                });
+            public void onSuccess(String url) {
+                NavController navController = Navigation.findNavController(view);
+                navController.navigateUp();
             }
-        });
+
+            @Override
+            public void onFail() {
+                Snackbar.make(view, "Failed to delete recipe in database", Snackbar.LENGTH_LONG).show();
+            }
+        }));
     }
 }

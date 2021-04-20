@@ -30,14 +30,14 @@ public class Model {
         void onComplete();
     }
 
-    private  Model(){
+    private Model() {
 
     }
 
 
     @SuppressLint("StaticFieldLeak")
     public void addRecipe(final Recipe recipe, Listener<Boolean> listener) {
-        ModelFirebase.addRecipe(recipe, listener);
+        modelFirebase.addRecipe(recipe, listener);
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String... strings) {
@@ -49,7 +49,7 @@ public class Model {
 
     @SuppressLint("StaticFieldLeak")
     public void deleteRecipe(final Recipe recipe, Listener<Boolean> listener) {
-        ModelFirebase.deleteRecipe(recipe, listener);
+        modelFirebase.deleteRecipe(recipe, listener);
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String... strings) {
@@ -63,14 +63,13 @@ public class Model {
 
 
     public void updateUserProfile(String username, String profileImgUrl, Listener<Boolean> listener) {
-        ModelFirebase.updateUserProfile(username, profileImgUrl, listener);
+        modelFirebase.updateUserProfile(username, profileImgUrl, listener);
     }
 
 
     public void setUserAppData(String email) {
-        ModelFirebase.setUserAppData(email);
+        modelFirebase.setUserAppData(email);
     }
-
 
 
     public LiveData<List<Recipe>> getAllRecipes() {
@@ -88,7 +87,7 @@ public class Model {
 
     public void refreshRecipesList(final CompListener listener) {
         long lastUpdated = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE).getLong("RecipesLastUpdateDate", 0);
-        ModelFirebase.getAllRecipesSince(lastUpdated, new Listener<List<Recipe>>() {
+        modelFirebase.getAllRecipesSince(lastUpdated, new Listener<List<Recipe>>() {
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onComplete(List<Recipe> data) {
@@ -123,21 +122,16 @@ public class Model {
 
     @SuppressLint("StaticFieldLeak")
     private void cleanLocalDb() {
-        ModelFirebase.getDeletedRecipesId(new Listener<List<String>>() {
+        modelFirebase.getDeletedRecipesId(data -> new AsyncTask<String, String, String>() {
             @Override
-            public void onComplete(final List<String> data) {
-                new AsyncTask<String, String, String>() {
-                    @Override
-                    protected String doInBackground(String... strings) {
-                        for (String id : data) {
-                            Log.d("TAG", "deleted id: " + id);
-                            AppLocalDb.db.RecipeDao().deleteByRecipeId(id);
-                        }
-                        return "";
-                    }
-                }.execute("");
+            protected String doInBackground(String... strings) {
+                for (String id : data) {
+                    Log.d("TAG", "deleted id: " + id);
+                    AppLocalDb.db.RecipeDao().deleteByRecipeId(id);
+                }
+                return "";
             }
-        });
+        }.execute(""));
     }
 
     public LiveData<List<Recipe>> getAllRecipesPerUser(String userId) {

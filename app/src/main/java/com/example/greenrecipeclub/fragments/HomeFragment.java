@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import com.example.greenrecipeclub.R;
 
 public class HomeFragment extends Fragment {
-
     ImageButton vegan;
     ImageButton glutenFree;
     ImageButton salads;
@@ -32,80 +31,52 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         vegan = view.findViewById(R.id.vegan);
-        glutenFree= view.findViewById(R.id.glutenFree);
-        salads= view.findViewById(R.id.salads);
-        fish= view.findViewById(R.id.fishes);
-        spaghetti= view.findViewById(R.id.spaguetti);
-        meat= view.findViewById(R.id.meat);
-        soup= view.findViewById(R.id.soup);
-        chicken= view.findViewById(R.id.chicken);
-        deserts= view.findViewById(R.id.desserts);
+        glutenFree = view.findViewById(R.id.glutenFree);
+        salads = view.findViewById(R.id.salads);
+        fish = view.findViewById(R.id.fishes);
+        spaghetti = view.findViewById(R.id.spaguetti);
+        meat = view.findViewById(R.id.meat);
+        soup = view.findViewById(R.id.soup);
+        chicken = view.findViewById(R.id.chicken);
+        deserts = view.findViewById(R.id.desserts);
 
 
-        vegan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Vegan");
-                Navigation.findNavController(view).navigate(action);
-            }
+        vegan.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Vegan");
+            Navigation.findNavController(view).navigate(action);
         });
-        glutenFree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Gluten Free");
-                Navigation.findNavController(view).navigate(action);
-            }
+        glutenFree.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Gluten Free");
+            Navigation.findNavController(view).navigate(action);
         });
-        salads.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Salads");
-                Navigation.findNavController(view).navigate(action);
-            }
+        salads.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Salads");
+            Navigation.findNavController(view).navigate(action);
         });
-        fish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Fishes");
-                Navigation.findNavController(view).navigate(action);
-            }
+        fish.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Fishes");
+            Navigation.findNavController(view).navigate(action);
         });
-        spaghetti.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Spaguatti");
-                Navigation.findNavController(view).navigate(action);
-            }
+        spaghetti.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Spaghetti");
+            Navigation.findNavController(view).navigate(action);
         });
-        meat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Meat");
-                Navigation.findNavController(view).navigate(action);
-            }
+        meat.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Meat");
+            Navigation.findNavController(view).navigate(action);
         });
-        soup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Soup");
-                Navigation.findNavController(view).navigate(action);
-            }
+        soup.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Soup");
+            Navigation.findNavController(view).navigate(action);
         });
-        chicken.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Chicken");
-                Navigation.findNavController(view).navigate(action);
-            }
+        chicken.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Chicken");
+            Navigation.findNavController(view).navigate(action);
         });
-        deserts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Dessert");
-                Navigation.findNavController(view).navigate(action);
-            }
+        deserts.setOnClickListener(v -> {
+            HomeFragmentDirections.ActionHomeFragmentToListOfRecipesFragment action = HomeFragmentDirections.actionHomeFragmentToListOfRecipesFragment("Dessert");
+            Navigation.findNavController(view).navigate(action);
         });
-
 
 
         return view;
