@@ -75,7 +75,7 @@ public class EditRecipeFragment extends Fragment {
         recipe = EditRecipeFragmentArgs.fromBundle(getArguments()).getRecipe();
 
         if (recipe != null) {
-            setEditRecipeHints();
+            setRecipeData(adapter);
         }
 
         editImageView.setOnClickListener(view -> uploadImageFromGallery());
@@ -135,11 +135,16 @@ public class EditRecipeFragment extends Fragment {
         return currentRecipe;
     }
 
-    private void setEditRecipeHints() {
+    private void setRecipeData(ArrayAdapter<CharSequence> adapter) {
         if (recipe.getRecipeImgUrl() != null) {
             Picasso.get().load(recipe.getRecipeImgUrl()).noPlaceholder().into(recipeImage);
         }
 
+        String category = recipe.getCategoryId();
+        if (category != null) {
+            int spinnerPosition = adapter.getPosition(category);
+            categoriesSpinner.setSelection(spinnerPosition);
+        }
         titleChangeText.setText(recipe.getRecipeName());
         instructionsText.setText(recipe.getInstructions());
         ingredientsText.setText(recipe.getIngredient());
