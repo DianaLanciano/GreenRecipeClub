@@ -26,8 +26,6 @@ public class activity_start extends AppCompatActivity {
                 }
             }
         }.start();
-
-
     }
 
     @Override

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -15,8 +14,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class activity_login extends AppCompatActivity {
     EditText emailInput;
     EditText passwordInput;
-    Button loginBtn;
-    Button registerBtn;
+    Button loginButton;
+    Button registerButton;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -25,8 +24,8 @@ public class activity_login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         firebaseAuth = firebaseAuth.getInstance();
-        registerBtn = findViewById(R.id.registerB_loginScreen);
-        registerBtn.setOnClickListener(view -> toRegisterPage());
+        registerButton = findViewById(R.id.registerB_loginScreen);
+        registerButton.setOnClickListener(view -> toRegisterPage());
 
         emailInput = findViewById(R.id.screen_login_input_email);
         passwordInput = findViewById(R.id.screen_login_input_password);
@@ -38,8 +37,8 @@ public class activity_login extends AppCompatActivity {
         }
         this.setTitle("Login");
 
-        loginBtn = findViewById(R.id.screen_login_btn_login);
-        loginBtn.setOnClickListener(view -> ModelFirebase.setUserLogin(emailInput.getText().toString(), passwordInput.getText().toString(), new ModelFirebase.Listener<Boolean>() {
+        loginButton = findViewById(R.id.screen_login_btn_login);
+        loginButton.setOnClickListener(view -> ModelFirebase.setUserLogin(emailInput.getText().toString(), passwordInput.getText().toString(), new ModelFirebase.Listener<Boolean>() {
             @Override
             public void onComplete() {
                 startActivity(new Intent(activity_login.this, MainActivity.class));

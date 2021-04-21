@@ -26,11 +26,11 @@ public class RecipePageFragment extends Fragment {
 
     View view;
     TextView title;
-    ImageView recipeImg;
+    ImageView recipeImage;
     ImageView editRecipeIcon;
     TextView ingredients;
     TextView instructions;
-    Button deleteBtn;
+    Button deleteButton;
     Recipe recipe;
 
     public RecipePageFragment() {
@@ -44,11 +44,11 @@ public class RecipePageFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_recipe_page, container, false);
 
         title = view.findViewById(R.id.screen_singleRecipe_title);
-        recipeImg = view.findViewById(R.id.screen_singleRecipe_img);
+        recipeImage = view.findViewById(R.id.screen_singleRecipe_img);
         editRecipeIcon = view.findViewById(R.id.screen_singleRecipe_editIcon);
         ingredients = view.findViewById(R.id.screen_singleRecipe_ingreadents);
         instructions = view.findViewById(R.id.screen_singleRecipe_instructions);
-        deleteBtn = view.findViewById(R.id.screen_singleRecipe_deleteRecipe);
+        deleteButton = view.findViewById(R.id.screen_singleRecipe_deleteRecipe);
 
 
         instructions.setMovementMethod(new ScrollingMovementMethod());
@@ -64,21 +64,21 @@ public class RecipePageFragment extends Fragment {
             instructions.setText(recipe.getInstructions());
 
             if (recipe.getRecipeImgUrl() != null) {
-                Picasso.get().load(recipe.getRecipeImgUrl()).placeholder(R.drawable.mainlogo).into(recipeImg);
+                Picasso.get().load(recipe.getRecipeImgUrl()).placeholder(R.drawable.mainlogo).into(recipeImage);
             } else {
-                recipeImg.setImageResource(R.drawable.ic_launcher_background);
+                recipeImage.setImageResource(R.drawable.ic_launcher_background);
             }
 
         }
         editRecipeIcon.setVisibility(view.INVISIBLE);
-        deleteBtn.setVisibility(view.INVISIBLE);
+        deleteButton.setVisibility(view.INVISIBLE);
 
         if (recipe.getPublisherId().equals(User.getInstance().userId)) {
             editRecipeIcon.setVisibility(view.VISIBLE);
             editRecipeIcon.setOnClickListener(v -> toEditRecipePage(recipe));
 
-            deleteBtn.setVisibility(view.VISIBLE);
-            deleteBtn.setOnClickListener(v -> deleteRecipe(recipe));
+            deleteButton.setVisibility(view.VISIBLE);
+            deleteButton.setOnClickListener(v -> deleteRecipe(recipe));
         }
 
 

@@ -41,7 +41,6 @@ public class UserListOfRecipesFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         viewModel = new ViewModelProvider(this).get(MyListViewModel.class);
     }
 

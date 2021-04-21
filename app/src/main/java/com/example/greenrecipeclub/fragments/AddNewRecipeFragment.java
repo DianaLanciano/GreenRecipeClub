@@ -101,7 +101,7 @@ public class AddNewRecipeFragment extends Fragment {
 
     void saveRecipe() {
         final Recipe recipe = createRecipe();
-        DataWarehouse.imageUploading(ConvertedImageBitmap, new DataWarehouse.Listener() {
+        DataWarehouse.uploadImage(ConvertedImageBitmap, new DataWarehouse.Listener() {
             @Override
             public void onSuccess(String url) {
                 recipe.setRecipeImgUrl(url);

@@ -87,7 +87,7 @@ public class EditRecipeFragment extends Fragment {
 
     void updateRecipe() {
         if (recipeImageUri != null) {
-            DataWarehouse.imageUploading(recipeImageBitmap, new DataWarehouse.Listener() {
+            DataWarehouse.uploadImage(recipeImageBitmap, new DataWarehouse.Listener() {
                 @Override
                 public void onSuccess(String url) {
                     Model.instance.addRecipe(generatedEditedRecipe(url), data -> {

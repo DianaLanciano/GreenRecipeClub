@@ -22,7 +22,7 @@ public class DataWarehouse {
         void onFail();
     }
 
-    public static void imageUploading(Bitmap imageBitmap, final Listener listener) {
+    public static void uploadImage(Bitmap imageBitmap, final Listener listener) {
 
         Date date = new Date();
         String imageName = User.getInstance().userName + date.getTime();

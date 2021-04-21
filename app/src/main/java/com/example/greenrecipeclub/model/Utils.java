@@ -11,7 +11,7 @@ public class Utils {
 
     static int REQ_CODE = 1;
 
-    public static void uploadImgFromGallery(Activity sender) {
+    public static void UploadImageFromGallery(Activity sender) {
         try {
             Intent openGalleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
             openGalleryIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
@@ -20,6 +20,5 @@ public class Utils {
         } catch (Exception e) {
             Toast.makeText(MyApplication.context, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
     }
 }

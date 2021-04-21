@@ -79,7 +79,7 @@ public class EditProfileFragment extends Fragment {
         else username = User.getInstance().userName;
 
         if (profileImageUri != null) {
-            DataWarehouse.imageUploading(imageBitmap, new DataWarehouse.Listener() {
+            DataWarehouse.uploadImage(imageBitmap, new DataWarehouse.Listener() {
                 @Override
                 public void onSuccess(String url) {
                     Model.instance.updateUserProfile(username, url, data -> {

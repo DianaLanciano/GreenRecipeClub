@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,17 +13,15 @@ import android.widget.Toast;
 
 import com.example.greenrecipeclub.R;
 import com.example.greenrecipeclub.model.ModelFirebase;
-import com.example.greenrecipeclub.model.User;
 import com.example.greenrecipeclub.model.Utils;
-import com.google.android.material.textfield.TextInputLayout;
 
 public class activity_register extends AppCompatActivity {
     ImageView profileImage;
     EditText email;
     EditText username;
     EditText password;
-    Button registerBtn;
-    Button loginBtn;
+    Button registerButton;
+    Button loginButton;
     Uri profileImageUri;
 
     @Override
@@ -36,14 +33,14 @@ public class activity_register extends AppCompatActivity {
         email = findViewById(R.id.screen_register_input_email);
         username = findViewById(R.id.screen_register_input_username);
         password = findViewById(R.id.screen_register_input_password);
-        registerBtn = findViewById(R.id.screen_register_btn_register);
-        loginBtn = findViewById(R.id.screen_register_btn_login);
+        registerButton = findViewById(R.id.screen_register_btn_register);
+        loginButton = findViewById(R.id.screen_register_btn_login);
         profileImageUri = null;
 
 
-        profileImage.setOnClickListener(v -> Utils.uploadImgFromGallery(activity_register.this));
+        profileImage.setOnClickListener(v -> Utils.UploadImageFromGallery(activity_register.this));
 
-        registerBtn.setOnClickListener(view -> ModelFirebase.registerUser(username.getText().toString(), password.getText().toString(), email.getText().toString(), profileImageUri, new ModelFirebase.Listener<Boolean>() {
+        registerButton.setOnClickListener(view -> ModelFirebase.registerUser(username.getText().toString(), password.getText().toString(), email.getText().toString(), profileImageUri, new ModelFirebase.Listener<Boolean>() {
             @Override
             public void onComplete() {
                 activity_register.this.finish();
@@ -51,12 +48,11 @@ public class activity_register extends AppCompatActivity {
 
             @Override
             public void onFail() {
-
             }
         }));
 
 
-        loginBtn.setOnClickListener(v -> toLoginPage());
+        loginButton.setOnClickListener(v -> toLoginPage());
 
     }
 
