@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3E5B8"
+    android:background="#CCD9C3"
     tools:context=".fragments.UserProfileFragment">
 
     <Button
@@ -15,7 +15,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:text="My Recipes"
-        app:backgroundTint="#393EAE"
+        app:backgroundTint="#43c593"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/screen_profile_text_email" />
@@ -39,7 +39,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:text="LOGOUT"
-        app:backgroundTint="#9B9DC6"
+        app:backgroundTint="#14453D"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

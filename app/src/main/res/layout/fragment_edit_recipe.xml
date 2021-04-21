@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3E5B8"
-    tools:context=".fragments.EditRecipeFragment" >
+    android:background="#CCD9C3"
+    tools:context=".fragments.EditRecipeFragment">
 
     <TextView
         android:id="@+id/screen_editRecip"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="title"
+        android:hint="TItle"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -131,7 +131,9 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
+        android:background="#43C59E"
         android:text="Save changes!"
+        app:backgroundTint="#43C59E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/screen_editRecipe_imgView" />

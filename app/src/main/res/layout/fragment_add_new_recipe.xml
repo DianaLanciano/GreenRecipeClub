@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3E5B8"
+    android:background="#CCD9C3"
     tools:context=".fragments.AddNewRecipeFragment">
 
     <TextView
@@ -114,7 +114,7 @@
         android:layout_marginEnd="32dp"
         android:background="#A2D1A1"
         android:text="Upload Recipe"
-        app:backgroundTint="#393EAE"
+        app:backgroundTint="#43C59E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
